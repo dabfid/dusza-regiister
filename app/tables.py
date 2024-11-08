@@ -12,12 +12,18 @@ Itt vannak az SQLAlchemy számára a táblák definiálva.
 db = SQLAlchemy(app)
 
 class Schools(db.Model):
+    """
+    Iskolák tárolása.
+    """
     __tablename__ = "schools"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(200), unique=True, nullable=False, index=True)
 
 class Admins(db.Model):
+    """
+    szervező felhasználók tárolása.
+    """
     __tablename__ = "admins"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
@@ -36,31 +42,35 @@ class Admins(db.Model):
         return check_password_hash(self.password_hash, password)
 
 class Languages(db.Model):
+    """
+    Programozási nyelvek tárolása.
+    """
     __tablename__ = "languages"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(30), unique=True, index=True)
 
 class Categories(db.Model):
+    """
+    Verseny kategóriák tárolása.
+    """
     __tablename__ = "categories"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(TEXT, nullable=False)
 
-class Students(db.Model):
-    __tablename__ = "students"
+class Teams(db.Model):
+    """
+    A jelentkezett csapat adatainak tárloása.
+    """
+    __tablename__ = "teams"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     username = db.Column(db.String(30), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(30), nullable=False, index=True)
 
-
-class Teams(db.Model):
-    __tablename__ = "teams"
-
-    id = db.Column(db.Integer, primary_key=True, index=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    email = db.Column(db.String(60), nullable=False, unique=True)
 
     @property
     def password(self):
