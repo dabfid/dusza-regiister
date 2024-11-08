@@ -3,6 +3,8 @@ from sqlalchemy.dialects.mysql import TEXT
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from flask_migrate import Migrate
+
 from app import app
 
 """
@@ -10,6 +12,7 @@ Itt vannak az SQLAlchemy számára a táblák definiálva.
 """
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 class Schools(db.Model):
     """
@@ -97,7 +100,7 @@ class Teams(db.Model):
     teammate_extra = db.Column(db.String(30))
     grade_extra = db.Column(db.Integer)
 
-    teachers = db.Column(db.String(TEXT, nullable=False))
+    teachers = db.Column(TEXT, nullable=False)
     
     category = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     language = db.Column(db.Integer, db.ForeignKey('languages.id'), nullable=False)
