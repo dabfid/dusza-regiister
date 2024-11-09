@@ -117,10 +117,10 @@ def delete_language(lang_id):
     if language:
         db.session.delete(language)
         db.session.commit()
-        return render_template("languages.html", 
-                               language = language, 
-                               form = AddLanguageForm(), 
-                               list = Languages.query.all())
+    return render_template("languages.html", 
+                           language = language, 
+                           form = AddLanguageForm(), 
+                           list = Languages.query.all())
 
 # kategória törlése az adatbázisból
 @dashboard.route("/delete_category/<int:item_id>", methods=["POST"])
@@ -139,10 +139,10 @@ def delete_category(category_id):
     if category:
         db.session.delete(category)
         db.session.commit()
-        return render_template("categories.html", 
-                               category = category, 
-                               form = AddCategoryForm(), 
-                               list = Categories.query.all())
+    return render_template("categories.html", 
+                           category = category, 
+                           form = AddCategoryForm(), 
+                           list = Categories.query.all())
 
 #statistics page
 @dashboard.route('/statistics', methods=['GET'])
