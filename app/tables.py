@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_migrate import Migrate
 
-from app import app
+from app import app # pyright: ignore
 
 """
 Itt vannak az SQLAlchemy számára a táblák definiálva.
@@ -104,4 +104,15 @@ class Teams(db.Model):
     
     category = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     language = db.Column(db.Integer, db.ForeignKey('languages.id'), nullable=False)
+
+class Notifications(db.Model):
+    """
+    Értesítések tárolása.
+    """
+    __tablename__ = "notifications"
+
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    message = db.Column(TEXT, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=False)
 

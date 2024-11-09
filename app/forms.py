@@ -47,6 +47,44 @@ class RegisterForm(FlaskForm):
         self.category.choices = [(category.id, category.name) for category in Categories.query.all()]
         self.language.choices = [(language.id, language.name) for language in Languages.query.all()]
 
+class UpdateForm(FlaskForm):
+    """
+    Ez a form szolgál a versenyzők adatainak módosítására. 
+    """
+
+    email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+
+    # Csapat Adatai
+    team_name = StringField("", validators=[DataRequired(), Length(max=30)])
+    school = SelectField('Iskola', validators=[DataRequired()], coerce=int)
+
+    teammate1 = StringField("", validators=[DataRequired(), Length(max=30)])
+    grade1 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+
+    teammate2 = StringField("", validators=[DataRequired(), Length(max=30)])
+    grade2 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+
+    teammate3 = StringField("", validators=[DataRequired(), Length(max=30)])
+    grade3 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+
+    # póttag
+    extra_teammate = StringField("", validators=[Length(max=30)])
+    extra_grade = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[])
+
+    teachers = StringField("", validators=[DataRequired()])
+
+    category = SelectField('Kategória', validators=[DataRequired()], coerce=int)
+    language = SelectField('Nyelv', validators=[DataRequired()], coerce=int)
+
+    submit = SubmitField("")
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateForm, self).__init__(*args, **kwargs)
+        self.school.choices = [(school.id, school.name) for school in Schools.query.all()]
+        self.category.choices = [(category.id, category.name) for category in Categories.query.all()]
+        self.language.choices = [(language.id, language.name) for language in Languages.query.all()]
+
+
 class LoginForm(FlaskForm):
     """
     Bejelentkezéshez használt form, szervezők és sima felhasználók is ezt használják.
