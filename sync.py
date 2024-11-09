@@ -1,14 +1,14 @@
 import re
 
 # Read dependencies from requirements.txt
-with open('app/requirements.txt', 'r') as req_file:
+with open('requirements.txt', 'r') as req_file:
     dependencies = [line.strip() for line in req_file if line.strip() and not line.startswith("#")]
 
 # Convert dependencies to TOML format
 dependencies_toml = ',\n    '.join(f'"{dep}"' for dep in dependencies)
 
 # Read the config.toml file
-with open('config.toml', 'r') as file:
+with open('pyproject.toml', 'r') as file:
     config_content = file.readlines()
 
 # Define regex to find the dependencies line in config.toml
@@ -28,8 +28,8 @@ for line in config_content:
         updated_content.append(line)
 
 # Write back the updated content to config.toml
-with open('config.toml', 'w') as file:
+with open('pyproject.toml', 'w') as file:
     file.writelines(updated_content)
 
-print("config.toml has been updated with the latest dependencies.")
+print("pyproject.toml has been updated with the latest dependencies.")
 
