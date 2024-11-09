@@ -78,3 +78,4 @@ def categories():
 
 
     return render_template("categories.html", category = category, form = form, list = result)
+
