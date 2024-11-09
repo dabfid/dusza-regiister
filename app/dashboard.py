@@ -101,24 +101,48 @@ def categories():
 
     return render_template("categories.html", category = category, form = form, list = result)
   
-#delete elements from database
+# nyelv törlése az adatbázisból
 @dashboard.route("/delete_language/<int:item_id>", methods=["POST"])
 @login_required
-def delete_language(item_id):
-    item = Languages.query.get(item_id)
-    if item:
-        db.session.delete(item)
-        db.session.commit()
-    return redirect(url_for("languages"))
+def delete_language(lang_id):
+    language = Languages.query.get(lang_id)
+    is_used = Teams.query.filter_by(language=lang_id).count() > 0
 
+    if is_used:
+        flash("Ez a nyelv használatban van egy csapat által.", "danger")
+        return render_template("languages.html", 
+                               language = language, 
+                               form = AddLanguageForm(), 
+                               list = Languages.query.all())
+    if language:
+        db.session.delete(language)
+        db.session.commit()
+        return render_template("languages.html", 
+                               language = language, 
+                               form = AddLanguageForm(), 
+                               list = Languages.query.all())
+
+# kategória törlése az adatbázisból
 @dashboard.route("/delete_category/<int:item_id>", methods=["POST"])
 @login_required
-def delete_category(item_id):
-    item = Categories.query.get(item_id)
-    if item:
-        db.session.delete(item)
+def delete_category(category_id):
+    category = Categories.query.get(category_id)
+    is_used = Teams.query.filter_by(category=category_id).count() > 0
+
+    if is_used:
+        flash("Ez a kategória használatban van egy csapat által", "danger")
+        return render_template("categories.html", 
+                               category = category, 
+                               form = AddCategoryForm(), 
+                               list = Categories.query.all())
+
+    if category:
+        db.session.delete(category)
         db.session.commit()
-    return redirect(url_for('dashboard_bp.categories'))
+        return render_template("categories.html", 
+                               category = category, 
+                               form = AddCategoryForm(), 
+                               list = Categories.query.all())
 
 #statistics page
 @dashboard.route('/statistics', methods=['GET'])
