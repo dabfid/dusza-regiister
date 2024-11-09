@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, request, session
+from flask import Flask, Blueprint, render_template, request, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from tables import Languages, db
@@ -11,6 +11,17 @@ dashboard_blueprint = Blueprint("dashboard", __name__, static_folder="static", t
 
 
 
+@dashboard_blueprint.route("/delete/<int:item_id>", methods=["POST"])
+def delete_element(item_id):
+    item = Languages.query.get(item_id)
+    if item:
+        db.session.delete(item)
+        db.session.commit()
+    return redirect(url_for("languages"))
+
+   
+
+
 @dashboard_blueprint.route("/", methods=['GET'])
 def dashboard():
     if session["permission"] == "admin":
@@ -19,11 +30,18 @@ def dashboard():
 
 dashboard_blueprint.route("/languages", methods=['GET', 'POST'])
 def languages():
+
     form = AddLanguageForm()
     language: str = None
+    result = Languages.query.all
 
     if form.validate_on_submit():
         language = form.language.data
-        return render_template("languages.html", content = language)
+        new_language = Languages(name=language)
+        db.session.add(new_language)
+        db.session.commit()
+        form.language.data = ""
 
-    return render_template("languages.html", language = language, form = form)
+
+
+    return render_template("languages.html", language = language, form = form, list = result)
