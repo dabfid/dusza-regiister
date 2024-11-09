@@ -7,8 +7,10 @@ app.config['SECRET_KEY'] = "asd"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@localhost/dusza'
 
 from app.students import students
+from app.dashboard import dashboard
 
 app.register_blueprint(students, url_prefix="/students")
+app.register_blueprint(dashboard, url_prefix="/dashboard")
 
 if __name__ == '__main__':
     app.run()

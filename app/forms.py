@@ -108,3 +108,20 @@ class AddCategoryForm(FlaskForm):
     """
     category = StringField("", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("")
+
+class AddSchoolForm(FlaskForm):
+    """
+    Új iskola hozzáadásához használt form.
+    """
+    username = StringField("", validators=[DataRequired(), Length(max=30)])
+    
+    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+
+    contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
+    contact_email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+
+    school_name = StringField("", validators=[DataRequired(), Length(max=30)])
+    school_address = StringField("", validators=[DataRequired(), Length(max=30)])
+
+    submit = SubmitField("")

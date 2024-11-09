@@ -1,14 +1,26 @@
 from flask import Blueprint, render_template, flash
+from flask import redirect, url_for
 from app.tables import Teams #pyright: ignore
 from app.tables import db #pyright: ignore
 
-from app.forms import RegisterForm, UpdateForm #pyright: ignore
+from flask_login import LoginManager
+from flask_login import login_required, login_user, logout_user
+
+from app.forms import RegisterForm, UpdateForm, LoginForm #pyright: ignore
+from app import app #pyright: ignore
 
 students = Blueprint("students_bp", __name__, static_folder="static", template_folder="templates")
 
 """
 A jelentkező diákokhoz tartozó route-okat tartalmazó blueprint.
 """
+login_student = LoginManager()
+login_student.init_app(app)
+login_student.login_view = "students_bp.login"
+
+@login_student.user_loader
+def load_user(user_id):
+    return Teams.query.get_or_404(user_id)
 
 @students.route('/register', methods=['GET', 'POST'])
 def register():
@@ -91,6 +103,7 @@ def register():
     return "a"
 
 @students.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit(id):
     form = UpdateForm()
     team = Teams.query.get_or_404(id)
@@ -116,4 +129,30 @@ def edit(id):
             flash('Hiba történt a frissítés során!')
             return render_template('edit.html', form=form, team=team)
     return render_template('edit.html', form=form, team=team)
+
+@students.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        user = Teams.query.filter_by(username=username).first()
+
+        if not user or not user.check_password(password):
+            flash("Invalid username or password", "danger")
+            return render_template("login.html", form=form)
+
+        if user.check_password(password):
+            login_user(user)
+        else:
+            flash("Invalid username or password", "danger")
+            return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
+
+@students.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("dashboard_bp.login"))
 

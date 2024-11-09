@@ -5,6 +5,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_migrate import Migrate
 
+from flask_login import UserMixin
+
 from app import app # pyright: ignore
 
 """
@@ -21,9 +23,27 @@ class Schools(db.Model):
     __tablename__ = "schools"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
-    name = db.Column(db.String(200), unique=True, nullable=False, index=True)
+    username = db.Column(db.String(30), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(30), nullable=False, index=True)
 
-class Admins(db.Model):
+    @property
+    def password(self):
+        raise AttributeError("Warning you cannot directly access the password of a user")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password_hash(self, password):
+        return check_password_hash(self.password_hash, password)
+    
+    school_name = db.Column(db.String(200), unique=True, nullable=False)
+    school_address = db.Column(db.String(200), nullable=False)
+    
+    contact_name = db.Column(db.String(30), nullable=False)
+    contact_email = db.Column(db.String(60), nullable=False)
+
+class Admins(db.Model, UserMixin):
     """
     szervező felhasználók tárolása.
     """
@@ -63,7 +83,7 @@ class Categories(db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(TEXT, nullable=False)
 
-class Teams(db.Model):
+class Teams(db.Model, UserMixin):
     """
     A jelentkezett csapat adatainak tárloása.
     """
