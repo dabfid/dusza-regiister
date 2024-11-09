@@ -125,3 +125,21 @@ class AddSchoolForm(FlaskForm):
     school_address = StringField("", validators=[DataRequired(), Length(max=30)])
 
     submit = SubmitField("")
+
+class UpdateSchoolForm(FlaskForm):
+    """
+    Meglévő iskola adatainak módosításához használt form.
+    """
+    contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
+    contact_email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+
+    school_name = StringField("", validators=[DataRequired(), Length(max=30)])
+    school_address = StringField("", validators=[DataRequired(), Length(max=30)])
+
+    submit = SubmitField("")
+
+class ValidateTeamForm(FlaskForm):
+    """
+    Csapatok validálására használt form.
+    """
+    submit = SubmitField("")

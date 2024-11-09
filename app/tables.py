@@ -105,6 +105,8 @@ class Teams(db.Model):
     category = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     language = db.Column(db.Integer, db.ForeignKey('languages.id'), nullable=False)
 
+    is_valid = db.Column(db.Boolean, default=False)
+
 class Notifications(db.Model):
     """
     Értesítések tárolása.
