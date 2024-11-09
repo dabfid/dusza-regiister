@@ -3,22 +3,18 @@ from flask import Blueprint, render_template, request, session, abort, url_for, 
 from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
 
-from datetime import datetime
-from tables import Languages, db, Categories
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import  DataRequired
 from forms import AddLanguageForm, AddCategoryForm
 
-from app.tables import Languages, Admins, Teams, db # pyright: ignore
+from app.tables import Languages, Admins, Teams, Categories, db # pyright: ignore
 from app.forms import LoginForm # pyright: ignore
 from app import app # pyright: ignore
 
 import plotly
 import plotly.express as px
 import json
-import numpy as np
 import pandas
+
+from datetime import datetime
 
 dashboard = Blueprint("dashboard_bp", __name__, static_folder="static", template_folder="templates")
 
@@ -44,6 +40,9 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
+
+        user = Admins.query.filter_by(username=username).first()
+
         if not user or not user.check_password(password):
             flash("Invalid username or password", "danger")
             return render_template("login.html", form=form)
@@ -66,16 +65,13 @@ def logout():
     logout_user()
     return redirect(url_for("dashboard_bp.login"))
 
-@dashboard.route("/languages", methods=['GET', 'POST'])
-@login_required
-
-        user = Admins.query.filter_by(username=username).first()
 #language page
 @dashboard.route("/languages", methods=['GET', 'POST'])
+@login_required
 def languages():
 
     form = AddLanguageForm()
-    language: str = None
+    language = None
     result = Languages.query.all
 
     if form.validate_on_submit():
@@ -85,20 +81,16 @@ def languages():
         db.session.commit()
         form.language.data = ""
 
-
-
     return render_template("languages.html", language = language, form = form, list = result)
-
-
-
 
 #categories page
 @dashboard.route("/categories", methods=['GET', 'POST'])
+@login_required
 def categories():
 
     form = AddCategoryForm()
-    category: str = None
-    result = Categories.query.all
+    category = None
+    result = Categories.query.all()
 
     if form.validate_on_submit():
         category = form.categorie.data
@@ -109,24 +101,26 @@ def categories():
 
     return render_template("categories.html", category = category, form = form, list = result)
   
-  #delete elements from database
-@dashboard_blueprint.route("/delete_language/<int:item_id>", methods=["POST"])
-def delete_element(item_id):
+#delete elements from database
+@dashboard.route("/delete_language/<int:item_id>", methods=["POST"])
+@login_required
+def delete_language(item_id):
     item = Languages.query.get(item_id)
     if item:
         db.session.delete(item)
         db.session.commit()
     return redirect(url_for("languages"))
 
-
 @dashboard.route("/delete_category/<int:item_id>", methods=["POST"])
-def delete_element(item_id):
+@login_required
+def delete_category(item_id):
     item = Categories.query.get(item_id)
     if item:
         db.session.delete(item)
         db.session.commit()
-    return redirect(url_for("categories")
-  
+    return redirect(url_for('dashboard_bp.categories'))
+
+#statistics page
 @dashboard.route('/statistics', methods=['GET'])
 @login_required
 def statistics():
