@@ -39,14 +39,13 @@
         <div class="row justify-content-center">
           <div class="col-4">
             <form method="post">
-             <div class="mb-3">
-               <label for="exampleInputEmail1" class="form-label">Programozási nyelv hozzáadása</label>
-               <input  class="form-control"  >
-             </div>
-                    </form>
-
-                    <div class=""><button type="button" class="btn menu mb-3 ">Hozzáadás</button></div>
-                    
+              {{ form.hidden_tag() }}
+ 
+              {{ form.category.label(class="form-label") }}
+              {{ form.category(class="form-control") }}
+              {{ form.submit(class="btn menu mb-3") }}
+ 
+             </form>     
           </div>
           
         </div>

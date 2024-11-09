@@ -90,8 +90,8 @@ class LoginForm(FlaskForm):
     Bejelentkezéshez használt form, szervezők, iskolák és a sima felhasználók is ezt használják.
     """
 
-    username = StringField("", validators=[DataRequired(), Length(max=30)])
-    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
 
     submit = SubmitField("")
 
@@ -106,7 +106,7 @@ class AddCategoryForm(FlaskForm):
     """
     Új kategória hozzáadásához használt form.
     """
-    category = StringField("", validators=[DataRequired(), Length(max=30)])
+    category = StringField("Kategóri hozzáadása:", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("")
 
 class AddSchoolForm(FlaskForm):
