@@ -7,12 +7,22 @@ from flask_migrate import Migrate
 
 from app import app # pyright: ignore
 
+from enum import Enum
+
 """
 Itt vannak az SQLAlchemy számára a táblák definiálva.
 """
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+class Status(Enum):
+    """
+    A csapatok státuszát tároló enum.
+    """
+    PENDING = 0
+    VALIDATED_BY_SCHOOL = 1
+    VALIDATED_BY_ADMIN = 2
 
 class Schools(db.Model):
     """
@@ -61,7 +71,6 @@ class Categories(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
-    description = db.Column(TEXT, nullable=False)
 
 class Teams(db.Model):
     """
@@ -105,7 +114,7 @@ class Teams(db.Model):
     category = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     language = db.Column(db.Integer, db.ForeignKey('languages.id'), nullable=False)
 
-    is_valid = db.Column(db.Boolean, default=False)
+    status = db.Column(db.Enum(Status), nullable=False, default=Status.PENDING)
 
 class Notifications(db.Model):
     """
@@ -116,5 +125,5 @@ class Notifications(db.Model):
     id = db.Column(db.Integer, primary_key=True, index=True)
     message = db.Column(TEXT, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=False)
+    team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=False)
 

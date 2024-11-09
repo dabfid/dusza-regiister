@@ -3,10 +3,13 @@ from flask import Blueprint, render_template, request, session, abort, url_for, 
 from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
 
-from forms import AddLanguageForm, AddCategoryForm
+from app.forms import AddLanguageForm, AddCategoryForm
 
-from app.tables import Languages, Admins, Teams, Categories, db # pyright: ignore
-from app.forms import LoginForm # pyright: ignore
+from app.tables import Languages, Admins, Teams, Categories, Notifications, db # pyright: ignore
+from app.tables import Status
+
+from app.forms import LoginForm, ValidateTeamForm # pyright: ignore
+
 from app import app # pyright: ignore
 
 import plotly
@@ -26,15 +29,16 @@ login_admin.login_view = "dashboard_bp.login"
 @login_admin.user_loader
 def load_user(user_id):
     return Admins.query.get_or_404(user_id)
- 
+
+# dashboard főoldal
 @dashboard.route("/", methods=['GET'])
 @login_required
 def index():
     return render_template("dashboard.html")
 
+# bejelentkezés
 @dashboard.route('/login', methods=['GET', 'POST'])
 def login():
-    """"
     next = request.args.get("next")
     form = LoginForm()
     if form.validate_on_submit():
@@ -54,18 +58,15 @@ def login():
             flash("Invalid username or password", "danger")
             return render_template("login.html", form=form)
     return render_template("login.html", form=form)
-      """
-    login_user(Admins.query.get(1))
-    next = request.args.get("next")
-    return redirect(next or url_for("dashboard_bp.index"))
 
+# kijelentkezés
 @dashboard.route('/logout', methods=['GET'])
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("dashboard_bp.login"))
 
-#language page
+# programozási nyelvek megjelenitése, kezelése
 @dashboard.route("/languages", methods=['GET', 'POST'])
 @login_required
 def languages():
@@ -83,7 +84,7 @@ def languages():
 
     return render_template("languages.html", language = language, form = form, list = result)
 
-#categories page
+# versenykategoriák megjelenitése, kezelése
 @dashboard.route("/categories", methods=['GET', 'POST'])
 @login_required
 def categories():
@@ -101,7 +102,7 @@ def categories():
 
     return render_template("categories.html", category = category, form = form, list = result)
   
-# nyelv törlése az adatbázisból
+# programozási nyelv törlése az adatbázisból
 @dashboard.route("/delete_language/<int:item_id>", methods=["POST"])
 @login_required
 def delete_language(lang_id):
@@ -122,7 +123,7 @@ def delete_language(lang_id):
                            form = AddLanguageForm(), 
                            list = Languages.query.all())
 
-# kategória törlése az adatbázisból
+# versenykategoria törlése az adatbázisból
 @dashboard.route("/delete_category/<int:item_id>", methods=["POST"])
 @login_required
 def delete_category(category_id):
@@ -144,13 +145,57 @@ def delete_category(category_id):
                            form = AddCategoryForm(), 
                            list = Categories.query.all())
 
+# csapatok megjelenitése
 @dashboard.route("/teams", methods=['GET'])
 @login_required
 def teams():
     teams = Teams.query.all()
     return render_template("teams.html", teams=teams)
 
-#statistics page
+# egyes csapatok megjelenitése, kezelése
+@dashboard.route("/team/<int:team_id>", methods=['GET'])
+@login_required
+def team(team_id):
+    team = Teams.query.get_or_404(team_id)
+    return render_template("team.html",
+                           team=team)
+
+@dashboard.route("/notify/<int:team_id>", methods=['POST'])
+@login_required
+def notify(team_id):
+    previous = request.referrer
+    
+    new_notification = Notifications(message="Hiánypótlás", team_id=team_id, date=datetime.now())
+    db.session.add(new_notification)
+    db.session.commit()
+
+    return redirect(previous)
+
+# csapatok adatainak jováhagyása
+@dashboard.route('/validate_team/<int:team_id>', methods=['POST'])
+@login_required
+def validate_team(team_id):
+    previous = request.referrer
+
+    team = Teams.query.get_or_404(team_id)
+    team.status = Status.VALIDATED_BY_ADMIN
+    db.session.commit()
+
+    return redirect(previous)
+
+# csapatok adatai letöltése csv formátumban
+@dashboard.route("/download/<int:id>", methods=['GET'])
+@login_required
+def download(id):
+    df = pandas.DataFrame(Teams.query.get_or_404(id))
+    output = df.to_csv(index=False)
+
+    return output, 200, {
+            "Content-Type": "text/csv",
+            "Content-Disposition": f"attachment; filename={id}.csv"
+            }
+
+# statisztikák megjelenitése részletesebben
 @dashboard.route('/statistics', methods=['GET'])
 @login_required
 def statistics():
