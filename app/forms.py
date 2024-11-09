@@ -99,7 +99,7 @@ class AddLanguageForm(FlaskForm):
     """
     Új programozási nyelv hozzáadásához használt form.
     """
-    language = StringField("", validators=[DataRequired(), Length(max=30)])
+    language = StringField("Kérem a nyelvet: ", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("")
 
 class AddCategoryForm(FlaskForm):

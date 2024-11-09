@@ -1,0 +1,9 @@
+{% if name %}
+    <h1>Hello {{content}}</h1>
+{% else %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.language.label }}
+        {{ from.name() }}
+    </form>

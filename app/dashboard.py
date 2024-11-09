@@ -4,6 +4,11 @@ from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
 
 from datetime import datetime
+from tables import Languages, db, Categories
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import  DataRequired
+from forms import AddLanguageForm, AddCategoryForm
 
 from app.tables import Languages, Admins, Teams, db # pyright: ignore
 from app.forms import LoginForm # pyright: ignore
@@ -25,7 +30,7 @@ login_admin.login_view = "dashboard_bp.login"
 @login_admin.user_loader
 def load_user(user_id):
     return Admins.query.get_or_404(user_id)
-
+ 
 @dashboard.route("/", methods=['GET'])
 @login_required
 def index():
@@ -39,9 +44,6 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-
-        user = Admins.query.filter_by(username=username).first()
-
         if not user or not user.check_password(password):
             flash("Invalid username or password", "danger")
             return render_template("login.html", form=form)
@@ -66,16 +68,65 @@ def logout():
 
 @dashboard.route("/languages", methods=['GET', 'POST'])
 @login_required
+
+        user = Admins.query.filter_by(username=username).first()
+#language page
+@dashboard.route("/languages", methods=['GET', 'POST'])
 def languages():
-    if request.method == 'GET' and session["permission"] == "admin":
-        return render_template("languages.html")
-    if request.method == 'POST':
-        language: str = request.form("language")
-        
+
+    form = AddLanguageForm()
+    language: str = None
+    result = Languages.query.all
+
+    if form.validate_on_submit():
+        language = form.language.data
         new_language = Languages(name=language)
         db.session.add(new_language)
         db.session.commit()
+        form.language.data = ""
 
+
+
+    return render_template("languages.html", language = language, form = form, list = result)
+
+
+
+
+#categories page
+@dashboard.route("/categories", methods=['GET', 'POST'])
+def categories():
+
+    form = AddCategoryForm()
+    category: str = None
+    result = Categories.query.all
+
+    if form.validate_on_submit():
+        category = form.categorie.data
+        new_category = Categories(name=category)
+        db.session.add(new_category)
+        db.session.commit()
+        form.category.data = ""
+
+    return render_template("categories.html", category = category, form = form, list = result)
+  
+  #delete elements from database
+@dashboard_blueprint.route("/delete_language/<int:item_id>", methods=["POST"])
+def delete_element(item_id):
+    item = Languages.query.get(item_id)
+    if item:
+        db.session.delete(item)
+        db.session.commit()
+    return redirect(url_for("languages"))
+
+
+@dashboard.route("/delete_category/<int:item_id>", methods=["POST"])
+def delete_element(item_id):
+    item = Categories.query.get(item_id)
+    if item:
+        db.session.delete(item)
+        db.session.commit()
+    return redirect(url_for("categories")
+  
 @dashboard.route('/statistics', methods=['GET'])
 @login_required
 def statistics():
@@ -117,4 +168,3 @@ def language_count():
 
     fig = px.pie(df, values='Count', names='Language')
     return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-
