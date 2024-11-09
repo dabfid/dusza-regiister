@@ -16,7 +16,7 @@ def teams():
                            teams=Schools.query.all())
 
 @schools.route('/teams/<int:id>', methods=['GET', 'POST'])
-def view_and_validate_team(id):
+def team(id):
     team = Schools.query.get_or_404(id)
     form = ValidateTeamForm()
 

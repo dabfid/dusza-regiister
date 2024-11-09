@@ -144,6 +144,12 @@ def delete_category(category_id):
                            form = AddCategoryForm(), 
                            list = Categories.query.all())
 
+@dashboard.route("/teams", methods=['GET'])
+@login_required
+def teams():
+    teams = Teams.query.all()
+    return render_template("teams.html", teams=teams)
+
 #statistics page
 @dashboard.route('/statistics', methods=['GET'])
 @login_required
