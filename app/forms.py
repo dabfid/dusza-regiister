@@ -87,7 +87,7 @@ class UpdateForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """
-    Bejelentkezéshez használt form, szervezők és sima felhasználók is ezt használják.
+    Bejelentkezéshez használt form, szervezők, iskolák és a sima felhasználók is ezt használják.
     """
 
     username = StringField("", validators=[DataRequired(), Length(max=30)])
@@ -99,7 +99,7 @@ class AddLanguageForm(FlaskForm):
     """
     Új programozási nyelv hozzáadásához használt form.
     """
-    language = StringField("Kérem a nyelvet: ", validators=[DataRequired(), Length(max=30)])
+    language = StringField("Nyelv hozzáadása:", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("")
 
 class AddCategoryForm(FlaskForm):

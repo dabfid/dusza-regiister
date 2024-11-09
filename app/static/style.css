@@ -1,0 +1,129 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.menu{
+    color: #DCCAAF;
+    background-color: #9B5135 ;
+    margin-right: 10px;
+}
+.szin{
+    background-color: #80432d   ;
+    margin-bottom: 0;
+}
+
+.idk{
+
+    color: #DCCAAF;
+
+}
+
+.navbar-brand:hover {
+    color: #DCCAAF; 
+    text-decoration: none;  
+}
+
+.na{
+    color: #DCCAAF;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.btn.menu:hover {
+    color: #b9a88f;  
+}
+
+.body
+{ background-color: #DCCAAF;}
+
+
+.tábla{
+    color: black;
+    background-color: aliceblue;
+    border-radius: 20px;
+    padding: 6px;
+    margin-right: 100px;
+    margin-left: 100px;
+    
+
+}
+
+.huh{margin-bottom: 60px;}
+
+
+.táblaa {
+    color: black;
+    background-color:#ece3d4;
+    border-radius: 20px;
+    padding: 6px;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: 20px ;
+}
+
+.cim{
+    color:#80432d;
+    background-color: aliceblue;
+    border-radius: 20px;
+    padding: 6px;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: 20px ;
+}
+
+.btn-outline-primary:disabled {
+    background-color:#9B5135; 
+    color:#DCCAAF; 
+    opacity: 1; 
+    border-color:#DCCAAF; 
+};
+
+.form{
+
+    background-color: #daa75b;
+    
+    
+    ;
+}
+
+.kozep{
+
+    margin-left: 500px;
+    margin-right: 500px;
+}
+
+.oh{
+
+    margin-left: 500;
+}
+
+.ize{
+    margin-top: 20p;
+}
+
+.test{
+   text-align: center;
+}
+
+.menu:hover{
+    background-color: #80432d;
+}
+
+.dropdown_inaktiv{
+    display: none;
+    
+
+}
+
+.aktiv{
+    display: block;
+    border: 1px solid black
+
+}
+
+a{
+    text-decoration: none;
+    color: #DCCAAF;
+}
