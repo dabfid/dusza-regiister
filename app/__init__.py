@@ -13,4 +13,8 @@ app.register_blueprint(students, url_prefix="/students")
 app.register_blueprint(dashboard, url_prefix="/dashboard")
 
 if __name__ == '__main__':
-    app.run()
+    try:
+        app.run()
+    except Exception as e:
+        print(e)
+        exit(1)

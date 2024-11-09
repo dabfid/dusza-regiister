@@ -143,3 +143,4 @@ class ValidateTeamForm(FlaskForm):
     Csapatok validálására használt form.
     """
     submit = SubmitField("")
+

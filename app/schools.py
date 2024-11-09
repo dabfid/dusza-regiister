@@ -5,6 +5,7 @@ from flask_login import login_required, login_user, logout_user
 
 from app.tables import Schools, Teams
 from app.tables import db
+from app.tables import Status
 
 from app.forms import LoginForm, UpdateSchoolForm, ValidateTeamForm
 
@@ -18,17 +19,19 @@ def teams():
 @schools.route('/teams/<int:id>', methods=['GET', 'POST'])
 def team(id):
     team = Schools.query.get_or_404(id)
-    form = ValidateTeamForm()
-
-    if form.validate_on_submit():
-        team.is_valid = form.is_valid.data
-        db.session.commit()
-        flash("A csapat adatai sikeresen jóváhagyva!", "success")
-
     return render_template("view_team.html", 
-                           team=Schools.query.get_or_404(id),
-                           form=form,
-                           validated=team.is_valid)
+                           team=team)
+# csapatok adatainak jováhagyása
+@schools.route('/validate_team/<int:team_id>', methods=['POST'])
+@login_required
+def validate_team(team_id):
+    previous = request.referrer
+
+    team = Teams.query.get_or_404(team_id)
+    team.status = Status.VALIDATED_BY_ADMIN
+    db.session.commit()
+
+    return redirect(previous)
 
 @schools.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
