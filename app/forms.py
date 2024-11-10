@@ -38,7 +38,7 @@ class RegisterForm(FlaskForm):
     category = SelectField("Versenykategória:", validators=[DataRequired()], coerce=int)
     language = SelectField("Választott programozási nyelv:", validators=[DataRequired()], coerce=int)
 
-    submit = SubmitField("Regisztrálás")
+    submit = SubmitField("Küldés")
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
@@ -75,7 +75,7 @@ class UpdateForm(FlaskForm):
     category = SelectField('Kategória', validators=[DataRequired()], coerce=int)
     language = SelectField('Nyelv', validators=[DataRequired()], coerce=int)
 
-    submit = SubmitField("Adatok frissítése")
+    submit = SubmitField("Küldés")
 
     def __init__(self, *args, **kwargs):
         super(UpdateForm, self).__init__(*args, **kwargs)
@@ -92,7 +92,7 @@ class LoginForm(FlaskForm):
     username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("Bejelentkezés")
+    submit = SubmitField("")
 
 class AddLanguageForm(FlaskForm):
     """
@@ -123,7 +123,7 @@ class AddSchoolForm(FlaskForm):
     school_name = StringField("", validators=[DataRequired(), Length(max=30)])
     school_address = StringField("", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("Hozzáadás")
+    submit = SubmitField("")
 
 class UpdateSchoolForm(FlaskForm):
     """
@@ -148,4 +148,13 @@ class ModifyDeadlineForm(FlaskForm):
     Határidő módosítására használt form.
     """
     deadline = DateField("Új határidő:", validators=[DataRequired()])
+    submit = SubmitField("")
+
+class RegisterNewAdminForm(FlaskForm):
+    """
+    Új adminisztrátor hozzáadására használt form.
+    """
+    username = StringField("", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("")
