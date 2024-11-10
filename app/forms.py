@@ -135,7 +135,7 @@ class UpdateSchoolForm(FlaskForm):
     school_name = StringField("Iskola megváltoztatott neve", validators=[DataRequired(), Length(max=30)])
     school_address = StringField("Iskola megváltoztatott címe:", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("")
+    submit = SubmitField("Frissítés")
 
 class ValidateTeamForm(FlaskForm):
     """
@@ -148,7 +148,7 @@ class ModifyDeadlineForm(FlaskForm):
     Határidő módosítására használt form.
     """
     deadline = DateTimeField("Új határidő:", validators=[DataRequired()])
-    submit = SubmitField("")
+    submit = SubmitField("Beállítás")
 
 class RegisterNewAdminForm(FlaskForm):
     """
@@ -166,4 +166,4 @@ class ChangePasswordForm(FlaskForm):
     old_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
-    submit = SubmitField("")
+    submit = SubmitField("Módosítás")

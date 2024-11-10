@@ -19,13 +19,15 @@ def load_user_info():
     if current_user:
         g.perms = Perms.SCHOOL
     g.notifications = Notifications.query.all()
+
+
 if hasattr(current_user, "username"):
-        if current_user.username:
-            g.user = current_user
-            g.perms = Perms.SCHOOL
-        else:
-            g.user = None
-            g.perms = Perms.LOGGED_OUT
+    if current_user.username:
+        g.user = current_user
+        g.perms = Perms.SCHOOL
+    else:
+        g.user = None
+        g.perms = Perms.LOGGED_OUT
 
 
 @schools.route("/teams", methods=["GET"])
@@ -94,6 +96,7 @@ def logout():
     logout_user()
     return redirect(url_for("dashboard_bp.login"))
 
+
 @schools.route("/change_password", methods=["POST"])
 @login_required
 def change_password():
@@ -103,7 +106,7 @@ def change_password():
         old_password = form.old_password.data
         password = form.password.data
         confirm_password = form.confirm_password.data
-        
+
         if not user.check_password_hash(old_password):
             flash("Helytelen jelszó")
             return render_template("change_password.html", form=form)
@@ -111,10 +114,9 @@ def change_password():
         if password != confirm_password:
             flash("A megadott jelszavak nem egyeznek")
             return render_template("change_password.html", form=form)
-        
+
         user.password = password
         db.session.commit()
         flash("Sikeres jelszóváltoztatás")
 
     return redirect(url_for("dashboard_bp.index"))
-
