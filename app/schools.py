@@ -18,7 +18,7 @@ schools = Blueprint(
 def load_user_info():
     g.perms = 3
 
-@schools.route("/teams", methods=["GET"])
+@schools.route("/teams", methods=["GET", "POST"])
 def teams():
     teams = Schools.query.filter_by(school_id=current_user.id).all()
     return render_template("teams.html", teams=teams)
