@@ -1,3 +1,9 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = "A simple Flask app"
+
+
 [project.urls]
 Home = "https://github.com/dabfid/dusza-regiister"
 
