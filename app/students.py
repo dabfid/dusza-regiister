@@ -39,12 +39,10 @@ def load_user(user_id):
 @students.before_request
 def load_user_info():
     g.perms = 1
-    g.team_id = current_user.id
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
 def index():
-    flash('halieeizu occse')
     return render_template("base.html")
 
 @students.route("/register", methods=["GET", "POST"])
@@ -105,6 +103,7 @@ def register():
         new_team.teachers = teachers
         new_team.category = category
         new_team.language = language
+        print(new_team, username, new_team.username, form.username.data)
         try:
             db.session.add(new_team)
             db.session.commit()
