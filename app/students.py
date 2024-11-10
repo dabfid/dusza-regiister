@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, flash, request, g
 from flask import redirect, url_for
+
 from app.tables import Teams #pyright: ignore
 from app.tables import db #pyright: ignore
+from app.tables import Perms
 
-from flask_login import LoginManager, login_required, login_user, logout_user
+from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 
 from app.forms import RegisterForm, UpdateForm, LoginForm #pyright: ignore
 from app import app #pyright: ignore
