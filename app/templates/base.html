@@ -20,6 +20,7 @@
                 <div class="collapse navbar-collapse justify-content-md-end" id="navbarNav">
                     <ul class="navbar-nav">
 
+                        {% if g.perms == 0 %}
                         <li class="nav-item mb-1 mb-md-0">
                             <a href="tanaroknak.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i> Szervezőknek</a>
                         </li>
@@ -29,15 +30,62 @@
                         <li class="nav-item mb-1 mb-md-0">
                             <a href="iskolaknak.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-building-fill"></i> Iskoláknak</a>
                         </li>  
+                        {% endif %}
+
+                        {% if g.perms == 1 %}
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Saját csapatom</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
+                        </li>
+                        {% endif %}
+
+                        {% if g.perms == 2 %}
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Nyelvek</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kategóriák</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskolák</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Határdiő</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Csapatok</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Statisztikák</a>
+                        </li>
+
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
+                        </li>
+                        {% endif %}
+
+                        {% if g.perms == 3 %}
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Csapatok</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskola adatai</a>
+                        </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
 
-
         <div class="container bg-white rounded">
             {% block content %}
             {% endblock %}
+            
         </div>
 
 
