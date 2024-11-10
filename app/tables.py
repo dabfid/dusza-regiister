@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import TEXT
 
+from flask_login import UserMixin
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_migrate import Migrate
@@ -32,19 +34,38 @@ class Perms(Enum):
     ADMIN = 1
     SCHOOL = 2
 
-class Schools(db.Model):
+class Schools(db.Model, UserMixin):
     """
     Iskolák tárolása.
     """
     __tablename__ = "schools"
 
     id = db.Column(db.Integer, primary_key=True, index=True)
+    username = db.Column(db.String(30), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(30), nullable=False, index=True)
+
+    @property
+    def password(self):
+        raise AttributeError("Warning you cannot directly access the password of a user")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password_hash(self, password):
+        return check_password_hash(self.password_hash, password)
+
     name = db.Column(db.String(200), unique=True, nullable=False, index=True)
+
+    address = db.Column(db.String(200), nullable=False)
+
+    contact_name = db.Column(db.String(30), nullable=False)
+    contact_email = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
         return self.name
 
-class Admins(db.Model):
+class Admins(db.Model, UserMixin):
     """
     szervező felhasználók tárolása.
     """
@@ -83,7 +104,7 @@ class Categories(db.Model):
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
 
-class Teams(db.Model):
+class Teams(db.Model, UserMixin):
     """
     A jelentkezett csapat adatainak tárloása.
     """
