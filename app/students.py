@@ -39,6 +39,7 @@ def load_user(user_id):
 @students.before_request
 def load_user_info():
     g.perms = 1
+    g.team_id = current_user.id
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
@@ -48,7 +49,7 @@ def index():
 
 @students.route("/register", methods=["GET", "POST"])
 def register():
-
+    g.perms = 0
 
     form = RegisterForm()
     username = None
@@ -133,6 +134,7 @@ def register():
         except IntegrityError:
             db.session.rollback()
             flash("A felhasználónév vagy email cim már foglalt!")
+        return render_template('students_bp.index')
     return render_template(
         "register.html",
         form=form)

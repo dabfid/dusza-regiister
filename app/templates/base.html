@@ -35,10 +35,10 @@
 
                         {% if g.perms == 1 %}
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Saját csapatom</a>
+                            <a href="{{ url_for('students_bp.edit', id=g.team_id) }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Saját csapatom</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
+                            <a href="{{ url_for('students_bp.logout') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
                             <a href="#" class="nav-link btn btn-lg btn-hover-grow" data-bs-toggle="offcanvas" href="#offcanvasNotify" role="button" aria-controls="offcanvasNotify"><i class="bi bi-bell-fill"></i></a>
@@ -47,38 +47,38 @@
 
                         {% if g.perms == 2 %}
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Nyelvek</a>
+                            <a href="{{url_for('dashboard_bp.languages')}}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Nyelvek</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kategóriák</a>
+                            <a href="{{ url_for('dashboard_bp.categories') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kategóriák</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskolák</a>
+                            <a href="{{ url_for('dashboard_bp.schools') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskolák</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Határdiő</a>
+                            <a href="{{ url_for('dashboard_bp.deadline') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Határdiő</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Csapatok</a>
+                            <a href="{{url_for('dashboard_bp.teams')}}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Csapatok</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Statisztikák</a>
+                            <a href="{{ url_for('dashboard_bp.statistics') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Statisztikák</a>
                         </li>
 
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
+                            <a href="{{ url_for('dashboard_bp.logout') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
                         </li>
                         {% endif %}
 
                         {% if g.perms == 3 %}
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Csapatok</a>
+                            <a href="{{ url_for('schools_bp.teams') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Csapatok</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskola adatai</a>
+                            <a href="{{ url_for('schools_bp.edit') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskola adatai</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
+                            <a href="{{ url_for('schools_bp.logout') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
                         </li>
                         {% endif %}
 
