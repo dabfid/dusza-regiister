@@ -87,7 +87,11 @@
         </nav>
         
         {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
         {% endfor %}
+
         <div class="container bg-white rounded">
             {% block content %}
             {% endblock %}

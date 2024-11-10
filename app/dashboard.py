@@ -58,14 +58,14 @@ def login():
         user = Admins.query.filter_by(username=username).first()
 
         if not user or not user.check_password(password):
-            flash("Invalid username or password", "danger")
+            flash("Helytelen felhasználónév vagy jelszó")
             return render_template("login.html", form=form)
 
         if user.check_password(password):
             login_user(user)
             return redirect(next or url_for("dashboard_bp.index"))
         else:
-            flash("Invalid username or password", "danger")
+            flash("Helytelen felhasználónév vagy jelszó")
             return render_template("login.html", form=form)
     return render_template("login.html", form=form)
 
@@ -120,7 +120,7 @@ def delete_language(lang_id):
     is_used = Teams.query.filter_by(language=lang_id).count() > 0
 
     if is_used:
-        flash("Ez a nyelv használatban van egy csapat által.", "danger")
+        flash("Ez a nyelv használatban van egy csapat által.")
         return render_template("languages.html", 
                                language = language, 
                                form = AddLanguageForm(), 
@@ -141,7 +141,7 @@ def delete_category(category_id):
     is_used = Teams.query.filter_by(category=category_id).count() > 0
 
     if is_used:
-        flash("Ez a kategória használatban van egy csapat által", "danger")
+        flash("Ez a kategória használatban van egy csapat által")
         return render_template("categories.html", 
                                category = category, 
                                form = AddCategoryForm(), 
@@ -226,7 +226,7 @@ def add_school():
         school_address = form.school_address.data
 
         if password != confirm_password:
-            flash("A jelszavak nem egyeznek", "danger")
+            flash("A megadott jelszavak nem egyeznek")
             return render_template("add_school.html", form=form)
 
         new_school = Schools(username=username, password=password, contact_name=contact_name, contact_email=contact_email, school_name=school_name, school_address=school_address)

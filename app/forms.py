@@ -1,5 +1,5 @@
-from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField
-from wtforms.validators import DataRequired, Email
+from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField, EmailField
+from wtforms.validators import DataRequired
 from wtforms.validators import Length
 
 from flask_wtf import FlaskForm
@@ -15,8 +15,7 @@ class RegisterForm(FlaskForm):
     username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
     confirm_password = PasswordField("Jelszó megerősítése:", validators=[DataRequired(), Length(max=30)])
-    email = StringField("Email:", validators=[DataRequired(), Email(), Length(max=60)])
-
+    email = EmailField("Email cím:", validators=[DataRequired(), Length(max=60)])
     # Csapat Adatai
     team_name = StringField("Csapat neve:", validators=[DataRequired(), Length(max=30)])
     school = SelectField("Iskola neve:", validators=[DataRequired()], coerce=int)
@@ -52,7 +51,7 @@ class UpdateForm(FlaskForm):
     Ez a form szolgál a versenyzők adatainak módosítására. 
     """
 
-    email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+    email = EmailField("", validators=[DataRequired(), Length(max=60)])
 
     # Csapat Adatai
     team_name = StringField("", validators=[DataRequired(), Length(max=30)])
@@ -119,7 +118,7 @@ class AddSchoolForm(FlaskForm):
     confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
 
     contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    contact_email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+    contact_email = EmailField("", validators=[DataRequired(), Length(max=60)])
 
     school_name = StringField("", validators=[DataRequired(), Length(max=30)])
     school_address = StringField("", validators=[DataRequired(), Length(max=30)])
@@ -131,7 +130,7 @@ class UpdateSchoolForm(FlaskForm):
     Meglévő iskola adatainak módosításához használt form.
     """
     contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    contact_email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+    contact_email = EmailField("", validators=[DataRequired(), Length(max=60)])
 
     school_name = StringField("", validators=[DataRequired(), Length(max=30)])
     school_address = StringField("", validators=[DataRequired(), Length(max=30)])

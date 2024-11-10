@@ -59,7 +59,7 @@ def edit(id):
         school.school_name = form.school_name.data
         db.session.commit()
 
-        flash("School updated successfully", "success")
+        flash("Az iskola adatai sikeresen frissültek")
     return render_template("edit_school.html", form=form, school=school)
 
 
@@ -73,13 +73,13 @@ def login():
         user = Schools.query.filter_by(username=username).first()
 
         if not user or not user.check_password(password):
-            flash("Invalid username or password", "danger")
+            flash("Helytelen jelszó vagy felhasználónév")
             return render_template("login.html", form=form)
 
         if user.check_password(password):
             login_user(user)
         else:
-            flash("Invalid username or password", "danger")
+            flash("Helytelen jelszó vagy felhasználónév")
             return render_template("login.html", form=form)
     return render_template("login.html", form=form)
 
