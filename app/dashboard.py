@@ -196,8 +196,24 @@ def validate_team(team_id):
 @dashboard.route("/download/<int:id>", methods=['GET'])
 @login_required
 def download(id):
-    df = pandas.DataFrame(Teams.query.get_or_404(id))
-    output = df.to_csv(index=False)
+    team = Teams.query.get_or_404(id)
+    output = (
+    f"{team.email}," +
+    f"{team.team_name}," +
+    f"{team.teammate1}," +
+    f"{team.teammate2}," +
+    f"{team.teammate3}," +
+    f"{team.grade1}," +
+    f"{team.grade2}," +
+    f"{team.grade3}," +
+    f"{team.teammate_extra}," +
+    f"{team.grade_extra}," +
+    f"{team.teachers}," +
+    f"{team.category}," +
+    f"{team.language}," +
+    f"{team.school_id}," +
+    f"{team.status},"
+)
 
     return output, 200, {
             "Content-Type": "text/csv",
