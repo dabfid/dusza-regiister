@@ -38,13 +38,8 @@ def load_user(user_id):
 
 @students.before_request
 def load_user_info():
-    if hasattr(current_user, "username"):
-        if current_user.username:
-            g.user = current_user
-            g.perms = Perms.ADMIN
-        else:
-            g.user = None
-            g.perms = Perms.LOGGED_OUT
+    if current_user:
+        g.perms = Perms.STUDENT
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
@@ -223,7 +218,7 @@ def login():
             flash("Helytelen jelszó vagy felhasználónév")
             return render_template("login.html", form=form)
 
-        if user.check_password(password):
+        if user.check_password_hash(password):
             login_user(user)
         else:
             flash("Helytelen jelszó vagy felhasználónév")
@@ -239,7 +234,7 @@ def change_password():
         password = form.password.data
         confirm_password = form.confirm_password.data
         
-        if not user.check_password(old_password):
+        if not user.check_password_hash(old_password):
             flash("Helytelen jelszó")
             return render_template("change_password.html", form=form)
 

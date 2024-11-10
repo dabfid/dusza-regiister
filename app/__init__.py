@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, g
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "asd"
@@ -14,6 +14,10 @@ app.register_blueprint(students, url_prefix="/students")
 app.register_blueprint(dashboard, url_prefix="/dashboard")
 app.register_blueprint(schools, url_prefix="/schools")
 
+@app.before_request
+def load_user_info():
+    g.user = None
+    g.perms = 0
 
 @app.route("/", methods=["GET"])
 def home():
