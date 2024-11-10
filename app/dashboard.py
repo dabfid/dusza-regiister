@@ -32,12 +32,13 @@ def load_user(user_id):
 
 @dashboard.before_request
 def load_user_info():
-    if current_user.username:
-        g.user = current_user
-        g.perms = Perms.STUDENT
-    else:
-        g.user = None
-        g.perms = None
+    if current_user:
+        if current_user.username:
+            g.user = current_user
+            g.perms = Perms.STUDENT
+        else:
+            g.user = None
+            g.perms = None
 
 # dashboard főoldal
 @dashboard.route("/", methods=['GET'])
@@ -166,7 +167,7 @@ def teams():
 @login_required
 def team(team_id):
     team = Teams.query.get_or_404(team_id)
-    return render_template("team.html",
+    return render_template("view_team.html",
                            team=team)
 
 @dashboard.route("/notify/<int:team_id>", methods=['POST'])
@@ -181,7 +182,7 @@ def notify(team_id):
     return redirect(previous)
 
 # csapatok adatainak jováhagyása
-@dashboard.route('/validate_team/<int:team_id>', methods=['POST'])
+@dashboard.route('/validate_team/<int:team_id>', methods=['GET'])
 @login_required
 def validate_team(team_id):
     previous = request.referrer
