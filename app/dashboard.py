@@ -197,7 +197,6 @@ def delete_category(category_id):
 @dashboard.route("/teams", methods=["GET"])
 def teams():
     teams = Teams.query.all()
-    
     return render_template("teams.html", teams=teams)
 
 
