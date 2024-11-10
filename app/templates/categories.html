@@ -3,15 +3,11 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="col mb-3 mt-3 ms-3 me-3">
-    <h1>
-      Versenykategória szerkesztő
-    </h1>
-  </div>
-</div>
 <div class="row justify-content-center">
   <div class="col">
+    <h2>
+      Versenykategória szerkesztő
+    </h2>
     <table class="table table-striped">
       <tr>
         <th>Kategóriák nevei</th>
@@ -32,7 +28,7 @@
     </table>
 
     <div class="row justify-content-center">
-      <div class="col-4">
+      <div class="col-12 col-md-4">
         <form method="post">
           {{ form.hidden_tag() }}
 

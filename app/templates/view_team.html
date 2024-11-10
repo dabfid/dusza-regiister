@@ -3,16 +3,20 @@
 {% block head_title %} {{team.team_name}} {% endblock %}
 
 {% block content %}
-{{ team.team_name }}
-{{ team.schools.name }}
-{{ team.categories.name }}
-{{ team.languages.name }}
-{% if team.status.value == 0 %}
-    Ellenőrzés alatt
-{% elif team.status.value == 1 %}
-    Iskola által jóváhagyva
-{% elif team.status.value == 2 %}
-    Szervezők által jóváhagyva
-{% endif %}
-<a href="{{ url_for('dashboard_bp.validate_team', team_id=team.id) }}" class="btn btn-primary">Jóváhagyás</a>
+<div class="row">
+    <div class="col">
+        {{ team.team_name }}
+        {{ team.schools.name }}
+        {{ team.categories.name }}
+        {{ team.languages.name }}
+        {% if team.status.value == 0 %}
+            Ellenőrzés alatt
+        {% elif team.status.value == 1 %}
+            Iskola által jóváhagyva
+        {% elif team.status.value == 2 %}
+            Szervezők által jóváhagyva
+        {% endif %}
+        <a href="{{ url_for('dashboard_bp.validate_team', team_id=team.id) }}" class="btn btn-primary">Jóváhagyás</a>
+    </div>
+</div>
 {% endblock %}

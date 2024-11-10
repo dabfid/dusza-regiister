@@ -1,45 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Iskola hozzáadása</h2>
-<form method="post">
-    {{ form.hidden_tag() }}
-
-    <div class="mb-2">
-        {{ form.username.label(class="form-label") }}
-        {{ form.username(class="form-control") }}
+<div class="row">
+    <div class="col">
+        <h2>Iskola hozzáadása</h2>
+        <form method="post">
+            {{ form.hidden_tag() }}
+        
+            <div class="mb-2">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control") }}
+            </div>
+        
+            <div class="mb-2">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+        
+            <div class="mb-2">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+        
+            <div class="mb-2">
+                {{ form.contact_name.label(class="form-label") }}
+                {{ form.contact_name(class="form-control") }}
+            </div>
+        
+            <div class="mb-2">
+                {{ form.contact_email.label(class="form-label") }}
+                {{ form.contact_email(class="form-control") }}
+            </div>
+        
+            <div class="mb-2">
+                {{ form.school_name.label(class="form-label") }}
+                {{ form.school_name(class="form-control") }}
+            </div>
+        
+            <div class="mb-2">
+                {{ form.school_address.label(class="form-label") }}
+                {{ form.school_address(class="form-control") }}
+            </div>
+        
+            {{ form.submit(class="btn btn-primary mb-3") }}
+        </form>
     </div>
-
-    <div class="mb-2">
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-control") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.confirm_password.label(class="form-label") }}
-        {{ form.confirm_password(class="form-control") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.contact_name.label(class="form-label") }}
-        {{ form.contact_name(class="form-control") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.contact_email.label(class="form-label") }}
-        {{ form.contact_email(class="form-control") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.school_name.label(class="form-label") }}
-        {{ form.school_name(class="form-control") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.school_address.label(class="form-label") }}
-        {{ form.school_address(class="form-control") }}
-    </div>
-
-    {{ form.submit(class="btn btn-primary mb-3") }}
-</form>
+</div>
 {% endblock %}
