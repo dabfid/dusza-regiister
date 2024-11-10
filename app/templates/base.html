@@ -39,6 +39,9 @@
                         <li class="nav-item mb-1 mb-md-0">
                             <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
                         </li>
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="#" class="nav-link btn btn-lg btn-hover-grow" data-bs-toggle="offcanvas" href="#offcanvasNotify" role="button" aria-controls="offcanvasNotify"><i class="bi bi-bell-fill"></i></a>
+                        </li>
                         {% endif %}
 
                         {% if g.perms == 2 %}
@@ -78,14 +81,26 @@
                         </li>
                         {% endif %}
 
-                        <li class="nav-item mb-1 mb-md-0">
-                            <a href="#" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Ert</a>
-                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        
+        {% if g.perms == 1 %}
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNotify" aria-labelledby="offcanvasNotifyLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasNotifyLabel">Értesítések</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% for notification in g.notifications %}
+                <div class="alert alert-warning" role="alert">
+                    {{ notification.message }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         {% for message in get_flashed_messages() %}
         <div class="alert alert-warning" role="alert">
             {{ message }}

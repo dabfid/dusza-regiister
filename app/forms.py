@@ -148,13 +148,22 @@ class ModifyDeadlineForm(FlaskForm):
     Határidő módosítására használt form.
     """
     deadline = DateField("Új határidő:", validators=[DataRequired()])
-    submit = SubmitField("Küldés")
+    submit = SubmitField("")
 
 class RegisterNewAdminForm(FlaskForm):
     """
     Új adminisztrátor hozzáadására használt form.
     """
-    username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
-    password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
-    confirm_password = PasswordField("Jelszó megerősítése:", validators=[DataRequired(), Length(max=30)])
-    submit = SubmitField("Regisztrálás")
+    username = StringField("", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    submit = SubmitField("")
+
+class ChangePasswordForm(FlaskForm):
+    """
+    Adminisztrátor jelszavának módosítására használt form.
+    """
+    old_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    submit = SubmitField("")

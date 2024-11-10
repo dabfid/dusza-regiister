@@ -13,7 +13,7 @@ from flask import (
 from flask_login import LoginManager, current_user
 from flask_login import login_required, login_user, logout_user
 
-from app.forms import AddLanguageForm, AddCategoryForm
+from app.forms import AddLanguageForm, AddCategoryForm, RegisterNewAdminForm, ChangePasswordForm
 
 from app.tables import (
     Languages,
@@ -23,9 +23,7 @@ from app.tables import (
     Notifications,
     Schools,
     Deadline,
-    RegisterNewAdminForm,
-    ChangePasswordForm,
-    db,
+    db
 )  # pyright: ignore
 from app.tables import Status, Perms
 
@@ -64,6 +62,7 @@ def load_user_info():
         else:
             g.user = None
             g.perms = None
+    g.notifications = Notifications.query.all()
 
 
 # dashboard főoldal

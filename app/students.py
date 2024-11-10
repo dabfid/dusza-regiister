@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, flash, request, g
+from flask import Blueprint, render_template, flash, g
 from flask import redirect, url_for
 
-from app.tables import Teams, Deadline  # pyright: ignore
+from app.tables import Teams, Deadline, Notifications  # pyright: ignore
 from app.tables import db  # pyright: ignore
 from app.tables import Perms
 
@@ -34,7 +34,6 @@ login_student.login_view = "students_bp.login"
 def load_user(user_id):
     return Teams.query.get_or_404(user_id)
 
-
 @students.before_request
 def load_user_info():
     if hasattr(current_user, "username"):
@@ -44,6 +43,11 @@ def load_user_info():
         else:
             g.user = None
             g.perms = None
+    g.notifications = Notifications.query.all()
+
+@students.route("/", methods=["GET"])
+def index():
+    return 'hali'
 
 @students.route("/register", methods=["GET", "POST"])
 def register():
