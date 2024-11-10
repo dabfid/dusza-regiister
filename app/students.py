@@ -25,12 +25,13 @@ def load_user(user_id):
 
 @students.before_request
 def load_user_info():
-    if current_user.username:
-        g.user = current_user
-        g.perms = Perms.ADMIN
-    else:
-        g.user = None
-        g.perms = None
+    if hasattr(current_user, "username"):
+        if current_user.username:
+            g.user = current_user
+            g.perms = Perms.ADMIN
+        else:
+            g.user = None
+            g.perms = None
 
 @students.route('/register', methods=['GET', 'POST'])
 def register():
