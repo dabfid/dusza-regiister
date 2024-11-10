@@ -55,7 +55,8 @@ def register():
         password = form.password.data
         confirm_password = form.confirm_password.data
         email = form.email.data
-
+        
+        team_name = form.team_name.data
         school = form.school.data
 
         t1 = form.teammate1.data
@@ -90,6 +91,7 @@ def register():
         new_team = Teams()
         new_team.username = username
         new_team.password = password
+        new_team.team_name = team_name
         new_team.email = email
         new_team.school_id = school
         new_team.teammate1 = t1
@@ -111,7 +113,7 @@ def register():
         except IntegrityError:
             db.session.rollback()
             flash("A felhasználónév vagy email cim már foglalt!")
-        return render_template('students_bp.index')
+        return redirect(url_for("students_bp.register"))
     return render_template(
         "register.html",
         form=form)
