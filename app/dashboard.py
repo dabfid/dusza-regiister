@@ -32,7 +32,7 @@ def load_user(user_id):
 
 @dashboard.before_request
 def load_user_info():
-    if current_user:
+    if hasattr(current_user, "username"):
         if current_user.username:
             g.user = current_user
             g.perms = Perms.STUDENT
