@@ -185,7 +185,7 @@ def login():
             login_user(user)
         else:
             flash("Helytelen jelszó vagy felhasználónév")
-    return redirect(url_for("students_bp.index"))
+    return render_template("students.login.html", form=form)
 
 @students.route("/change_password", methods=["POST"])
 @login_required
