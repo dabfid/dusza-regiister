@@ -24,6 +24,14 @@ class Status(Enum):
     VALIDATED_BY_SCHOOL = 1
     VALIDATED_BY_ADMIN = 2
 
+class Perms(Enum):
+    """
+    Jogosultságokat tároló enum.
+    """
+    STUDENT = 0
+    ADMIN = 1
+    SCHOOL = 2
+
 class Schools(db.Model):
     """
     Iskolák tárolása.

@@ -11,6 +11,15 @@ from app.forms import LoginForm, UpdateSchoolForm, ValidateTeamForm
 
 schools = Blueprint("schools_bp", __name__, static_folder="static", template_folder="templates")
 
+@schools.before_request
+def load_user_info():
+    if current_user.is_authenticated:
+        g.user = current_user
+        g.perms = Perms.SCHOOL
+    else:
+        g.user = None
+        g.perms = None
+
 @schools.route('/teams', methods=['GET'])
 def teams():
     return render_template("teams.html", 
