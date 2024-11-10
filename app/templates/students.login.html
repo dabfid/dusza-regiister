@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-  <div class="col">
+
+<div class="row justify-content-center">
+  <div class="col-6">
     <h2>Versenyzői bejelentkezés</h2>
     <p>Kérjük, jelentkezzen be!</p>
-  </div>
-</div>
-<div class="row justify-content-center">
-  <div class="col">
+
     <form method="post">
       {{ form.hidden_tag() }}
 
