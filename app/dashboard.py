@@ -152,7 +152,7 @@ def categories():
 
 # programozási nyelv törlése az adatbázisból
 @dashboard.route("/delete_language/<int:lang_id>", methods=["POST"])
-# @login_required
+@login_required
 def delete_language(lang_id):
     language = Languages.query.get(lang_id)
     is_used = Teams.query.filter_by(language=lang_id).count() > 0
