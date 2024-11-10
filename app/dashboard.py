@@ -101,7 +101,7 @@ def logout():
 
 # programozási nyelvek megjelenitése, kezelése
 @dashboard.route("/languages", methods=["GET", "POST"])
-
+@login_required
 def languages():
     form = AddLanguageForm()
     language = None
@@ -198,6 +198,7 @@ def delete_category(category_id):
 
 # csapatok megjelenitése
 @dashboard.route("/teams", methods=["GET"])
+@login_required
 def teams():
     teams = Teams.query.all()
     return render_template("teams.html", teams=teams)
@@ -340,6 +341,7 @@ def download(id):
 
 # határidő modosítása
 @dashboard.route("/deadline", methods=["GET", "POST"])
+@login_required
 def deadline():
     form = ModifyDeadlineForm()
     deadline = Deadline.query.first()
