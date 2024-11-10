@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Deadline</h1>
+    <p>Deadline is {{ deadline.date }}</p>
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        {{ form.deadline.label }}
+        {{ form.deadline(size=10) }}
+
+        {{ form.submit() }}
+    </form>
+{% endblock %}

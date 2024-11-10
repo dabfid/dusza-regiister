@@ -18,6 +18,8 @@ from app import app  # pyright: ignore
 
 from datetime import datetime
 
+from pymysql import IntegrityError
+
 students = Blueprint(
     "students_bp", __name__, static_folder="static", template_folder="templates"
 )
@@ -42,12 +44,13 @@ def load_user_info():
             g.perms = Perms.ADMIN
         else:
             g.user = None
-            g.perms = None
+            g.perms = Perms.LOGGED_OUT
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
 def index():
-    return 'hali'
+    flash('halieeizu occse')
+    return render_template("base.html")
 
 @students.route("/register", methods=["GET", "POST"])
 def register():
@@ -151,9 +154,13 @@ def register():
             category=category,
             language=language,
         )
-        db.session.add(new_team)
-        db.session.commit()
-        flash("Sikeres regisztráció!")
+        try:
+            db.session.add(new_team)
+            db.session.commit()
+            flash("Sikeres regisztráció!")
+        except IntegrityError:
+            db.session.rollback()
+            flash("A felhasználónév már foglalt!")
     return render_template(
         "register.html",
         form=form,
@@ -244,7 +251,7 @@ def change_password():
             flash("A megadott jelszavak nem egyeznek")
             return render_template("change_password.html", form=form)
         
-        user.password(password)
+        user.password = password
         db.session.commit()
         flash("Sikeres jelszóváltoztatás")
 

@@ -10,7 +10,7 @@ New admin
 
 
 {% block content %}
-<form method="post">
+<form method="POST">
     {{ form.hidden_tag() }}
 
     <!--register data-->
@@ -23,6 +23,6 @@ New admin
     {{ form.confirm_password.label(class="form-label") }}
     {{ form.confirm_password(class="form-control") }} <br>
 
-    {{ form.email.label(class="form-label") }}
-    {{ form.email(class="form-control") }} <br><br>
+    {{ form.submit(class="btn btn-primary") }}
 </form>
+{% endblock %}
