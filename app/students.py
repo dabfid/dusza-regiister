@@ -3,8 +3,7 @@ from flask import redirect, url_for
 from app.tables import Teams #pyright: ignore
 from app.tables import db #pyright: ignore
 
-from flask_login import LoginManager
-from flask_login import login_required, login_user, logout_user
+from flask_login import LoginManager, login_required, login_user, logout_user
 
 from app.forms import RegisterForm, UpdateForm, LoginForm #pyright: ignore
 from app import app #pyright: ignore
@@ -109,7 +108,7 @@ def register():
         db.session.add(new_team)
         db.session.commit()
         return "succes!"
-    return "a"
+    return render_template("register.html", form = form, username = username, password = password, confirm_password = confirm_password, email = email, team_name = team_name, school = school, t1 = t1, t2 = t2, t3 = t3, g1 = g1, g2 = g2, g3 = g3, t_extra = t_extra, g_extra = g_extra, teachers = teachers, category = category, language = language)
 
 @students.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -163,4 +162,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("dashboard_bp.login"))
-

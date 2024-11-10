@@ -12,32 +12,32 @@ class RegisterForm(FlaskForm):
     """
 
    # Ezekkel az adatokkal lehet késöbb szerkeszteni a megadott adatokat
-    username = StringField("", validators=[DataRequired(), Length(max=30)])
-    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
-    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
-    email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+    username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("Jelszó megerősítése:", validators=[DataRequired(), Length(max=30)])
+    email = StringField("Email:", validators=[DataRequired(), Email(), Length(max=60)])
 
     # Csapat Adatai
-    team_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    school = SelectField('Iskola', validators=[DataRequired()], coerce=int)
+    team_name = StringField("Csapat neve:", validators=[DataRequired(), Length(max=30)])
+    school = SelectField("Iskola neve:", validators=[DataRequired()], coerce=int)
 
-    teammate1 = StringField("", validators=[DataRequired(), Length(max=30)])
-    grade1 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+    teammate1 = StringField("Első csapattag neve:", validators=[DataRequired(), Length(max=30)])
+    grade1 = SelectField("Első csapattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
 
-    teammate2 = StringField("", validators=[DataRequired(), Length(max=30)])
-    grade2 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+    teammate2 = StringField("Második csapattag neve:", validators=[DataRequired(), Length(max=30)])
+    grade2 = SelectField("Második csapattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
 
-    teammate3 = StringField("", validators=[DataRequired(), Length(max=30)])
-    grade3 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+    teammate3 = StringField("Harmadik csapattag neve:", validators=[DataRequired(), Length(max=30)])
+    grade3 = SelectField("Harmadik csapattag osztály:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
 
     # póttag
-    extra_teammate = StringField("", validators=[Length(max=30)])
-    extra_grade = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[])
+    extra_teammate = StringField("Extra csapattag neve:", validators=[Length(max=30)])
+    extra_grade = SelectField("Extra cspattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[])
 
-    teachers = StringField("", validators=[DataRequired()])
+    teachers = StringField("Felkészítő tanár:", validators=[DataRequired()])
 
-    category = SelectField('Kategória', validators=[DataRequired()], coerce=int)
-    language = SelectField('Nyelv', validators=[DataRequired()], coerce=int)
+    category = SelectField("Versenykategória:", validators=[DataRequired()], coerce=int)
+    language = SelectField("Választott programozási nyelv:", validators=[DataRequired()], coerce=int)
 
     submit = SubmitField("")
 
