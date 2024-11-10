@@ -38,7 +38,7 @@ def load_user(user_id):
 
 @students.before_request
 def load_user_info():
-    g.perms = Perms.STUDENT
+    g.perms = 1
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
@@ -185,7 +185,7 @@ def login():
             login_user(user)
         else:
             flash("Helytelen jelszó vagy felhasználónév")
-    return redirect(url_for("students_bp.index"))
+    return render_template("students.login.html", form=form)
 
 @students.route("/change_password", methods=["POST"])
 @login_required

@@ -57,7 +57,7 @@ def load_user(user_id):
 
 @dashboard.before_request
 def load_user_info():
-    g.perms = Perms.ADMIN
+    g.perms = 2
 
 
 # dashboard főoldal
