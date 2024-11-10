@@ -38,8 +38,7 @@ def load_user(user_id):
 
 @students.before_request
 def load_user_info():
-    if current_user:
-        g.perms = Perms.STUDENT
+    g.perms = Perms.STUDENT
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
@@ -107,72 +106,36 @@ def register():
             flash("A két jelszó nem egyezik!")
             return render_template(
                 "register.html",
-                form=form,
-                username=username,
-                password=password,
-                confirm_password=confirm_password,
-                email=email,
-                team_name=team_name,
-                school=school,
-                t1=t1,
-                t2=t2,
-                t3=t3,
-                g1=g1,
-                g2=g2,
-                g3=g3,
-                t_extra=t_extra,
-                g_extra=g_extra,
-                teachers=teachers,
-                category=category,
-                language=language,
-            )
+                form=form)
 
-        new_team = Teams(
-            username=username,
-            password=password,
-            email=email,
-            team_name=team_name,
-            school_id=school,
-            teammate1=t1,
-            teammate2=t2,
-            teammate3=t3,
-            grade1=g1,
-            grade2=g2,
-            grade3=g3,
-            teammate_extra=t_extra,
-            grade_extra=g_extra,
-            teachers=teachers,
-            category=category,
-            language=language,
-        )
+        new_team = Teams()
+        new_team.username = username
+        new_team.password = password
+        new_team.email = email
+        new_team.school_id = school
+        new_team.teammate1 = t1
+        new_team.teammate2 = t2
+        new_team.teammate3 = t3
+        new_team.grade1 = g1
+        new_team.grade2 = g2
+        new_team.grade3 = g3
+        if t_extra:
+            new_team.teammate_extra = t_extra
+        if g_extra:
+            new_team.grade_extra = g_extra
+        new_team.teachers = teachers
+        new_team.category = category
+        new_team.language = language
         try:
             db.session.add(new_team)
             db.session.commit()
             flash("Sikeres regisztráció!")
         except IntegrityError:
             db.session.rollback()
-            flash("A felhasználónév már foglalt!")
+            flash("A felhasználónév vagy email cim már foglalt!")
     return render_template(
         "register.html",
-        form=form,
-        username=username,
-        password=password,
-        confirm_password=confirm_password,
-        email=email,
-        team_name=team_name,
-        school=school,
-        t1=t1,
-        t2=t2,
-        t3=t3,
-        g1=g1,
-        g2=g2,
-        g3=g3,
-        t_extra=t_extra,
-        g_extra=g_extra,
-        teachers=teachers,
-        category=category,
-        language=language,
-    )
+        form=form)
 
 
 @students.route("/edit/<int:id>", methods=["GET", "POST"])
