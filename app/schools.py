@@ -16,7 +16,7 @@ schools = Blueprint(
 
 @schools.before_request
 def load_user_info():
-    g.perms = Perms.SCHOOL
+    g.perms = 3
 
 @schools.route("/teams", methods=["GET"])
 def teams():

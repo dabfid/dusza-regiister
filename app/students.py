@@ -38,7 +38,7 @@ def load_user(user_id):
 
 @students.before_request
 def load_user_info():
-    g.perms = Perms.STUDENT
+    g.perms = 1
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
