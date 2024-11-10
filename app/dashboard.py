@@ -5,10 +5,10 @@ from flask_login import login_required, login_user, logout_user
 
 from app.forms import AddLanguageForm, AddCategoryForm
 
-from app.tables import Languages, Admins, Teams, Categories, Notifications, Schools, db # pyright: ignore
+from app.tables import Languages, Admins, Teams, Categories, Notifications, Schools, Deadline, db # pyright: ignore
 from app.tables import Status, Perms
 
-from app.forms import LoginForm, ValidateTeamForm, AddSchoolForm # pyright: ignore
+from app.forms import LoginForm, ValidateTeamForm, AddSchoolForm, ModifyDeadlineForm # pyright: ignore
 
 from app import app # pyright: ignore
 
@@ -274,6 +274,20 @@ def download(id):
             "Content-Type": "text/csv",
             "Content-Disposition": f"attachment; filename={id}.csv"
             }
+
+# határidő modosítása
+@dashboard.route("/deadline", methods=['GET', 'POST'])
+@login_required
+def deadline():
+    form = ModifyDeadlineForm()
+    deadline = Deadline.query.first()
+    if form.validate_on_submit():
+        deadline.date = form.deadline
+        db.session.commit()
+    return render_template("deadline.html", 
+                           form=form, 
+                           deadline=deadline)
+
 
 # statisztikák megjelenitése részletesebben
 @dashboard.route('/statistics', methods=['GET'])

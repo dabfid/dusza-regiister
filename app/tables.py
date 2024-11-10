@@ -157,3 +157,12 @@ class Notifications(db.Model):
     date = db.Column(db.DateTime, nullable=False)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=False)
 
+class Deadline(db.Model):
+    """
+    Határidők tárolása.
+    """
+    __tablename__ = "deadline"
+
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    date = db.Column(db.DateTime, nullable=False)
+
