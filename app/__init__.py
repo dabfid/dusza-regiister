@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "asd"
@@ -13,6 +13,11 @@ from app.schools import schools
 app.register_blueprint(students, url_prefix="/students")
 app.register_blueprint(dashboard, url_prefix="/dashboard")
 app.register_blueprint(schools, url_prefix="/schools")
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return render_template("home.html")
 
 if __name__ == '__main__':
     try:

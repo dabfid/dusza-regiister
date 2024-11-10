@@ -152,6 +152,7 @@ def edit(id):
     team = Teams.query.get_or_404(id)
 
     if form.validate_on_submit():
+        team.team_name = form.team_name.data
         team.school_id = form.school.data
         team.teammate1 = form.teammate1.data
         team.teammate2 = form.teammate2.data
