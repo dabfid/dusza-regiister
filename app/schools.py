@@ -19,6 +19,11 @@ def load_user_info():
     g.perms = 3
     g.school_id = current_user.id
 
+
+
+
+
+
 @schools.route("/teams", methods=["GET", "POST"])
 def teams():
     teams = Schools.query.filter_by(school_id=current_user.id).all()
