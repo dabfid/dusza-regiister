@@ -28,3 +28,7 @@
     transform: scale(1.1); 
     z-index: 1; /
 }
+
+.form-control, .form-control:focus, .form-control option {
+    --bs-body-bg: #fff;
+}
