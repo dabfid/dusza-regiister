@@ -1,4 +1,4 @@
-{% extends base.html %}
+{% extends 'base.html' %}
 
 {% block head_title %}
 Regisztrálás
@@ -28,8 +28,8 @@ Regisztrálás
               {{ form.password.label(class="form-label") }}
               {{ form.password(class="form-control") }} <br>
 
-              {{ form.comfirm_password.label(class="form-label") }}
-              {{ form.comfirm_password(class="form-control") }} <br>
+              {{ form.confirm_password.label(class="form-label") }}
+              {{ form.confirm_password(class="form-control") }} <br>
 
               {{ form.email.label(class="form-label") }}
               {{ form.email(class="form-control") }} <br><br>
