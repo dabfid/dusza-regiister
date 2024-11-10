@@ -99,7 +99,28 @@ def register():
         language = form.language.data
 
         if confirm_password != password:
-            pass  # do stuff!!
+            flash("A két jelszó nem egyezik!")
+            return render_template(
+                "register.html",
+                form=form,
+                username=username,
+                password=password,
+                confirm_password=confirm_password,
+                email=email,
+                team_name=team_name,
+                school=school,
+                t1=t1,
+                t2=t2,
+                t3=t3,
+                g1=g1,
+                g2=g2,
+                g3=g3,
+                t_extra=t_extra,
+                g_extra=g_extra,
+                teachers=teachers,
+                category=category,
+                language=language,
+            )
 
         new_team = Teams(
             username=username,
@@ -121,7 +142,7 @@ def register():
         )
         db.session.add(new_team)
         db.session.commit()
-        return "succes!"
+        flash("Sikeres regisztráció!")
     return render_template(
         "register.html",
         form=form,
@@ -185,13 +206,13 @@ def login():
         user = Teams.query.filter_by(username=username).first()
 
         if not user or not user.check_password(password):
-            flash("Invalid username or password", "danger")
+            flash("Helytelen jelszó vagy felhasználónév")
             return render_template("login.html", form=form)
 
         if user.check_password(password):
             login_user(user)
         else:
-            flash("Invalid username or password", "danger")
+            flash("Helytelen jelszó vagy felhasználónév")
     return redirect(url_for("students_bp.index"))
 
 
