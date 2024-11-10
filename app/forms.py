@@ -154,7 +154,7 @@ class RegisterNewAdminForm(FlaskForm):
     """
     Új adminisztrátor hozzáadására használt form.
     """
-    username = StringField("Flehasználónév:", validators=[DataRequired(), Length(max=30)])
-    password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
-    confirm_password = PasswordField("Jelszó megerősítése:", validators=[DataRequired(), Length(max=30)])
-    submit = SubmitField("Regisztrálás")
+    username = StringField("", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    submit = SubmitField("")

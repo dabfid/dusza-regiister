@@ -24,6 +24,7 @@ from app.tables import (
     Schools,
     Deadline,
     RegisterNewAdminForm,
+    ChangePasswordForm,
     db,
 )  # pyright: ignore
 from app.tables import Status, Perms
@@ -359,12 +360,36 @@ def new_admin():
             return render_template("new_admin.html", form=form)
 
         new_admin = Admins(username=username)
-        new_admin.set_password(password)
+        new_admin.password(password)
         db.session.add(new_admin)
         db.session.commit()
         flash("Sikeres regisztráció")
     return render_template("new_admin.html",
                            form=form)
+
+@dashboard.route("/change_password", methods=["POST"])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    user = Admins.query.get_or_404(current_user.id)
+    if form.validate_on_submit():
+        old_password = form.old_password.data
+        password = form.password.data
+        confirm_password = form.confirm_password.data
+        
+        if not user.check_password(old_password):
+            flash("Helytelen jelszó")
+            return render_template("change_password.html", form=form)
+
+        if password != confirm_password:
+            flash("A megadott jelszavak nem egyeznek")
+            return render_template("change_password.html", form=form)
+        
+        user.password(password)
+        db.session.commit()
+        flash("Sikeres jelszóváltoztatás")
+
+    return redirect(url_for("dashboard_bp.index"))
 
 # statisztikák megjelenitése részletesebben
 @dashboard.route("/statistics", methods=["GET"])
