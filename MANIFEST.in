@@ -1,0 +1,3 @@
+include README.md
+recursive-include your_package *.txt *.cfg
+include LICENSE
