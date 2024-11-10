@@ -16,23 +16,7 @@ schools = Blueprint(
 
 @schools.before_request
 def load_user_info():
-<<<<<<< HEAD
     g.perms = Perms.SCHOOL
-=======
-    if current_user:
-        g.perms = Perms.SCHOOL
-    g.notifications = Notifications.query.all()
-
-
-if hasattr(current_user, "username"):
-    if current_user.username:
-        g.user = current_user
-        g.perms = Perms.SCHOOL
-    else:
-        g.user = None
-        g.perms = Perms.LOGGED_OUT
-
->>>>>>> cf0210c5c503f3586f27369425ed721f89274518
 
 @schools.route("/teams", methods=["GET"])
 def teams():
