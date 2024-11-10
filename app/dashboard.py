@@ -243,7 +243,7 @@ def validate_team(team_id):
 @login_required
 def schools():
     schools = Schools.query.all()
-    return render_template("schools.html", schools=schools)
+    return render_template("dashboard_schools.html", schools=schools)
 
 
 # új iskola hozzáadása

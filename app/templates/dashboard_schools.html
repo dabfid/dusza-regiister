@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="table table-striped">
+    <tr>
+        <th>Iskolák</th>
+    </tr>
+    {% if schools %}
+    {% for school in schools}
+    <tr>
+        <td>{% school.name %}</td>
+        <td>
+            <form action="{{ url_for('delete_school', id=school.id) }}" method="post">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+<form action="{{ url_for('add_school') }}" method="post">
+    <button type="submit" class="btn btn-outline-danger">Adj hozzá egy iskolát</button>
+</form>
+{% endblock %}

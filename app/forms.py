@@ -115,27 +115,27 @@ class AddSchoolForm(FlaskForm):
     username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
     
     password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
-    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("Jelszó megerősítése:", validators=[DataRequired(), Length(max=30)])
 
-    contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    contact_email = EmailField("", validators=[DataRequired(), Length(max=60)])
+    contact_name = StringField("Kapcsolattartó neve:", validators=[DataRequired(), Length(max=30)])
+    contact_email = EmailField("Kapcsolattartó e-mail címe:", validators=[DataRequired(), Length(max=60)])
 
-    school_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    school_address = StringField("", validators=[DataRequired(), Length(max=30)])
+    school_name = StringField("Iskola neve:", validators=[DataRequired(), Length(max=30)])
+    school_address = StringField("Iskola címe:", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("")
+    submit = SubmitField("Hozzáadás")
 
 class UpdateSchoolForm(FlaskForm):
     """
     Meglévő iskola adatainak módosításához használt form.
     """
-    contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    contact_email = EmailField("", validators=[DataRequired(), Length(max=60)])
+    contact_name = StringField("Új kapcsolattartó neve:", validators=[DataRequired(), Length(max=30)])
+    contact_email = EmailField("Új kapcsolattartó e-mail címe:", validators=[DataRequired(), Length(max=60)])
 
-    school_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    school_address = StringField("", validators=[DataRequired(), Length(max=30)])
+    school_name = StringField("Iskola megváltoztatott neve", validators=[DataRequired(), Length(max=30)])
+    school_address = StringField("Iskola megváltoztatott címe:", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("")
+    submit = SubmitField("Frissítés")
 
 class ValidateTeamForm(FlaskForm):
     """
@@ -148,7 +148,7 @@ class ModifyDeadlineForm(FlaskForm):
     Határidő módosítására használt form.
     """
     deadline = DateTimeField("Új határidő:", validators=[DataRequired()])
-    submit = SubmitField("")
+    submit = SubmitField("Beállítás")
 
 class RegisterNewAdminForm(FlaskForm):
     """
@@ -166,4 +166,4 @@ class ChangePasswordForm(FlaskForm):
     old_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
-    submit = SubmitField("")
+    submit = SubmitField("Módosítás")
