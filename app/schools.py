@@ -29,7 +29,6 @@ if hasattr(current_user, "username"):
         g.user = None
         g.perms = Perms.LOGGED_OUT
 
-@schools.route("/", methods=["GET", "POST"])
 
 @schools.route("/teams", methods=["GET", "POST"])
 def teams():

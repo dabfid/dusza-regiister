@@ -21,11 +21,15 @@ Bejelentkezés
     <form method="post">
       {{ form.hidden_tag() }}
 
-      {{ form.username.label(class="form-label") }}
-      {{ form.username(class="form-control") }} <br>
+      <div class="mb-3">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control") }}
+      </div>
 
-      {{ form.password.label(class="form-label") }}
-      {{ form.password(class="form-control") }} <br>
+      <div class="mb-3">
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control") }}
+      </div>
 
       {{ form.submit(class="btn btn-primary mb-3") }}
     </form>
