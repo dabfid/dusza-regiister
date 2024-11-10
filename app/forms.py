@@ -93,7 +93,7 @@ class LoginForm(FlaskForm):
     username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("")
+    submit = SubmitField("Bejelentkezés")
 
 class AddLanguageForm(FlaskForm):
     """
@@ -124,7 +124,7 @@ class AddSchoolForm(FlaskForm):
     school_name = StringField("", validators=[DataRequired(), Length(max=30)])
     school_address = StringField("", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("Bejelentkezés")
+    submit = SubmitField("Hozzáadás")
 
 class UpdateSchoolForm(FlaskForm):
     """
