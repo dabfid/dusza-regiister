@@ -1,5 +1,4 @@
-from flask import Blueprint, render_template, request, session, abort, url_for, redirect, flash
-
+from flask import Blueprint, render_template, request, session, abort, url_for, redirect, flash, g
 
 from flask_login import LoginManager, current_user
 from flask_login import login_required, login_user, logout_user
@@ -33,7 +32,7 @@ def load_user(user_id):
 
 @dashboard.before_request
 def load_user_info():
-    if current_user.is_authenticated:
+    if current_user.username:
         g.user = current_user
         g.perms = Perms.STUDENT
     else:
@@ -157,9 +156,9 @@ def delete_category(category_id):
 
 # csapatok megjelenitése
 @dashboard.route("/teams", methods=['GET'])
-@login_required
 def teams():
     teams = Teams.query.all()
+    print(teams)
     return render_template("teams.html", teams=teams)
 
 # egyes csapatok megjelenitése, kezelése

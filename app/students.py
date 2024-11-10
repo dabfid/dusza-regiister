@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, request, g
 from flask import redirect, url_for
 from app.tables import Teams #pyright: ignore
 from app.tables import db #pyright: ignore
@@ -24,7 +24,7 @@ def load_user(user_id):
 
 @students.before_request
 def load_user_info():
-    if current_user.is_authenticated:
+    if current_user.username:
         g.user = current_user
         g.perms = Perms.ADMIN
     else:

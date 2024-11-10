@@ -3,10 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ title }}</title>
+        <title>Documetns</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% url_for(static/style.css) %}">
-
+        <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='css/style.css')}}">
     </head>
     <body class="body">
         <nav class="navbar navbar-expand-lg szin mb-5">
@@ -24,8 +23,7 @@
                         <li class="nav-item">
                             <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/regisztracio.html">Diákoknak</a></button>
                         </li>    
-                        <li class="nav-item">
-                            <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/iskolaknak.html">Iskoláknak</a></button>
+                        <li class="nav-item"                            <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/iskolaknak.html">Iskoláknak</a></button>
                         </li>  
                     </ul>
                 </div>
@@ -36,14 +34,14 @@
         <div class="container bg-white rounded">
             <div class="row">
                 <div class="col mb-3 mt-3 ms-3 me-3" >
-                    <h1>
-                        {{title}}
-                    </h1> 
+                    {% block title %}
+                    {% endblock %}
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-4">
-                    {{content}}
+                    {% block content %}
+                    {% endblock %}
                 </div>
             </div>
         </div>

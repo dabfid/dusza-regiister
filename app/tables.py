@@ -41,6 +41,9 @@ class Schools(db.Model):
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(200), unique=True, nullable=False, index=True)
 
+    def __repr__(self):
+        return self.name
+
 class Admins(db.Model):
     """
     szervező felhasználók tárolása.
@@ -85,26 +88,23 @@ class Teams(db.Model):
     A jelentkezett csapat adatainak tárloása.
     """
     __tablename__ = "teams"
-
     id = db.Column(db.Integer, primary_key=True, index=True)
     username = db.Column(db.String(30), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(30), nullable=False, index=True)
-
     email = db.Column(db.String(60), nullable=False, unique=True)
-
+    
     @property
     def password(self):
         raise AttributeError("Warning you cannot directly access the password of a user")
-
+    
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
-
+    
     def check_password_hash(self, password):
         return check_password_hash(self.password_hash, password)
-
+    
     team_name = db.Column(db.String(30), unique=True, nullable=False)
-
     school_id = db.Column(db.Integer, db.ForeignKey('schools.id'), nullable=False)
     
     teammate1 = db.Column(db.String(30), nullable=False)
@@ -113,16 +113,17 @@ class Teams(db.Model):
     grade2 = db.Column(db.Integer, nullable=False)
     teammate3 = db.Column(db.String(30), nullable=False)
     grade3 = db.Column(db.Integer, nullable=False)
-
     teammate_extra = db.Column(db.String(30))
     grade_extra = db.Column(db.Integer)
-
     teachers = db.Column(TEXT, nullable=False)
     
     category = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     language = db.Column(db.Integer, db.ForeignKey('languages.id'), nullable=False)
-
     status = db.Column(db.Enum(Status), nullable=False, default=Status.PENDING)
+
+    schools = db.relationship('Schools', backref='teams')
+    categories = db.relationship('Categories', backref='teams')
+    languages = db.relationship('Languages', backref='teams')
 
 class Notifications(db.Model):
     """

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+<h1> Csapatok </h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    Debug: 
+    {% if teams %}
+        Teams variable is defined. Count: {{ teams|length }}
+    {% else %}
+        Teams variable is NOT defined
+    {% endif %}
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Csapatnév</th>
+            <th>Iskolája</th>
+            <th>Kategória</th>
+            <th>Programozási nyelv</th>
+            <th>Státusz</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if teams %}
+        {% for team in teams %}
+            <tr>
+                <td>{{ team.team_name }}</td>
+                <td>{{ team.schools.name }}</td>
+                <td>{{ team.categories.name }}</td>
+                <td>{{ team.languages.name }}</td>
+                <td>{{ team.status }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">Nincsenek elérhető csapatok</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}
