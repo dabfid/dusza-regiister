@@ -77,11 +77,17 @@
                             <a href="csapatok.html" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
                         </li>
                         {% endif %}
+
+                        <li class="nav-item mb-1 mb-md-0">
+                            <a href="#" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Ert</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
+        
+        {% for message in get_flashed_messages() %}
+        {% endfor %}
         <div class="container bg-white rounded">
             {% block content %}
             {% endblock %}
