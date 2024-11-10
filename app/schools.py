@@ -16,14 +16,17 @@ schools = Blueprint(
 
 @schools.before_request
 def load_user_info():
-    if hasattr(current_user, "username"):
+    if current_user:
+        g.perms = Perms.SCHOOL
+    g.notifications = Notifications.query.all()
+if hasattr(current_user, "username"):
         if current_user.username:
             g.user = current_user
             g.perms = Perms.SCHOOL
         else:
             g.user = None
             g.perms = Perms.LOGGED_OUT
-    g.notifications = Notifications.query.all()
+
 
 @schools.route("/teams", methods=["GET"])
 def teams():
@@ -73,7 +76,7 @@ def login():
 
         user = Schools.query.filter_by(username=username).first()
 
-        if not user or not user.check_password(password):
+        if not user or not user.check_password_hash(password):
             flash("Helytelen jelszó vagy felhasználónév")
             return render_template("login.html", form=form)
 
@@ -101,7 +104,7 @@ def change_password():
         password = form.password.data
         confirm_password = form.confirm_password.data
         
-        if not user.check_password(old_password):
+        if not user.check_password_hash(old_password):
             flash("Helytelen jelszó")
             return render_template("change_password.html", form=form)
 

@@ -57,21 +57,15 @@ def load_user(user_id):
 
 @dashboard.before_request
 def load_user_info():
-    if hasattr(current_user, "username"):
-        if current_user.username:
-            g.user = current_user
-            g.perms = Perms.STUDENT
-        else:
-            g.user = None
-            g.perms = Perms.LOGGED_OUT
-    g.notifications = Notifications.query.all()
+    if current_user:
+        g.perms = Perms.ADMIN
 
 
 # dashboard főoldal
 @dashboard.route("/", methods=["GET"])
 @login_required
 def index():
-    return render_template("dashboard.html")
+    return render_template("base.html")
 
 
 # bejelentkezés
@@ -85,11 +79,11 @@ def login():
 
         user = Admins.query.filter_by(username=username).first()
 
-        if not user or not user.check_password(password):
+        if not user or not user.check_password_hash(password):
             flash("Helytelen felhasználónév vagy jelszó")
             return render_template("login.html", form=form)
 
-        if user.check_password(password):
+        if user.check_password_hash(password):
             login_user(user)
             return redirect(next or url_for("dashboard_bp.index"))
         else:
@@ -152,7 +146,7 @@ def categories():
 
 # programozási nyelv törlése az adatbázisból
 @dashboard.route("/delete_language/<int:lang_id>", methods=["POST"])
-# @login_required
+@login_required
 def delete_language(lang_id):
     language = Languages.query.get(lang_id)
     is_used = Teams.query.filter_by(language=lang_id).count() > 0
@@ -393,7 +387,7 @@ def change_password():
         password = form.password.data
         confirm_password = form.confirm_password.data
         
-        if not user.check_password(old_password):
+        if not user.check_password_hash(old_password):
             flash("Helytelen jelszó")
             return render_template("change_password.html", form=form)
 
