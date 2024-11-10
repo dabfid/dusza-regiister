@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user, current_user
 
-from app.tables import Schools, Teams
+from app.tables import Schools, Teams, Notifications
 from app.tables import db
 from app.tables import Status, Perms
 
@@ -23,6 +23,7 @@ def load_user_info():
         else:
             g.user = None
             g.perms = None
+    g.notifications = Notifications.query.all()
 
 @schools.route("/teams", methods=["GET"])
 def teams():
