@@ -13,7 +13,7 @@ from flask_login import (
     current_user,
 )
 
-from app.forms import RegisterForm, UpdateForm, LoginForm  # pyright: ignore
+from app.forms import RegisterForm, UpdateForm, LoginForm, ChangePasswordForm  # pyright: ignore
 from app import app  # pyright: ignore
 
 students = Blueprint(
@@ -214,6 +214,30 @@ def login():
         else:
             flash("Helytelen jelszó vagy felhasználónév")
     return redirect(url_for("students_bp.index"))
+
+@students.route("/change_password", methods=["POST"])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    user = Teams.query.get_or_404(current_user.id)
+    if form.validate_on_submit():
+        old_password = form.old_password.data
+        password = form.password.data
+        confirm_password = form.confirm_password.data
+        
+        if not user.check_password(old_password):
+            flash("Helytelen jelszó")
+            return render_template("change_password.html", form=form)
+
+        if password != confirm_password:
+            flash("A megadott jelszavak nem egyeznek")
+            return render_template("change_password.html", form=form)
+        
+        user.password(password)
+        db.session.commit()
+        flash("Sikeres jelszóváltoztatás")
+
+    return redirect(url_for("dashboard_bp.index"))
 
 
 @students.route("/logout", methods=["GET"])

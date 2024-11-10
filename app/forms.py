@@ -158,3 +158,12 @@ class RegisterNewAdminForm(FlaskForm):
     password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("")
+
+class ChangePasswordForm(FlaskForm):
+    """
+    Adminisztrátor jelszavának módosítására használt form.
+    """
+    old_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    submit = SubmitField("")
