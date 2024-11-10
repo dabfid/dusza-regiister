@@ -52,11 +52,11 @@ class UpdateForm(FlaskForm):
     Ez a form szolgál a versenyzők adatainak módosítására. 
     """
 
-    email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
+    email = StringField("Új e-mail cím:", validators=[DataRequired(), Email(), Length(max=60)])
 
     # Csapat Adatai
-    team_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    school = SelectField('Iskola', validators=[DataRequired()], coerce=int)
+    team_name = StringField("Új csapatnév:", validators=[DataRequired(), Length(max=30)])
+    school = SelectField('Iskola megváltoztatása', validators=[DataRequired()], coerce=int)
 
     teammate1 = StringField("", validators=[DataRequired(), Length(max=30)])
     grade1 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
