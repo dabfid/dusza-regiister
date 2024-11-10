@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, request, g
 from flask import redirect, url_for
 
-from app.tables import Teams  # pyright: ignore
+from app.tables import Teams, Deadline  # pyright: ignore
 from app.tables import db  # pyright: ignore
 from app.tables import Perms
 
@@ -15,6 +15,8 @@ from flask_login import (
 
 from app.forms import RegisterForm, UpdateForm, LoginForm, ChangePasswordForm  # pyright: ignore
 from app import app  # pyright: ignore
+
+from datetime import datetime
 
 students = Blueprint(
     "students_bp", __name__, static_folder="static", template_folder="templates"
@@ -43,9 +45,14 @@ def load_user_info():
             g.user = None
             g.perms = None
 
-
 @students.route("/register", methods=["GET", "POST"])
 def register():
+    deadline = Deadline.query.first()
+
+    if datetime.now() > deadline.date:
+        flash("A jelentkezési határidő lejárt!")
+        return redirect(url_for("students_bp.index"))
+
     form = RegisterForm()
     username = None
     password = None
