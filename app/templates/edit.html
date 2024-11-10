@@ -7,76 +7,84 @@
 
 {% block content %}
 <div class="row">
-    <div class="col mb-3 mt-3 ms-3 me-3">
-        <h1>
-            Programozási nyelv szerkesztő
-        </h1>
-    </div>
-</div>
-<div class="row justify-content-center">
     <div class="col">
-        <div class="row justify-content-center">
-            <div class="col-6">
-                <form method="post">
-                    {{ form.hidden_tag() }}
+        <h2>Programozási nyelvek szerkesztése</h2>
+        <form method="post">
+            {{ form.hidden_tag() }}
 
-
-                    <!--team name and school name-->
-                    {{ form.team_name.label(class="form-label") }}
-                    {{ form.team_name(class="form-control", value = team.team_name) }} <br>
-
-                    {{ form.school.label(class="form-label") }}
-                    {{ form.school(class="form-control", value = team.schools.name) }} <br>
-
-
-
-                    <!--teammates data-->
-                    <!--teammate1-->
-                    {{ form.teammate1.label(class="form-label") }}
-                    {{ form.teammate1(class="form-control", value = team.teammate1) }} <br>
-
-                    {{ form.grade1.label(class="form-label") }}
-                    {{ form.grade1(class="form-control", value = team.grade1) }} <br>
-
-                    <!--teammate2-->
-                    {{ form.teammate2.label(class="form-label") }}
-                    {{ form.teammate2(class="form-control", value = team.teammate2) }} <br>
-
-                    {{ form.grade2.label(class="form-label") }}
-                    {{ form.grade2(class="form-control", value = team.grade2) }} <br>
-
-                    <!--teammate3-->
-                    {{ form.teammate3.label(class="form-label") }}
-                    {{ form.teammate3(class="form-control", value = team.teammate3) }} <br>
-
-                    {{ form.grade3.label(class="form-label") }}
-                    {{ form.grade3(class="form-control", value = team.grade3) }} <br>
-
-                    <!--extra teammate-->
-                    {{ form.extra_teammate.label(class="form-label") }}
-                    {{ form.extra_teammate(class="form-control", value = team.teammate_extra) }} <br>
-
-                    {{ form.extra_grade.label(class="form-label") }}
-                    {{ form.extra_grade(class="form-control", value = team.grade_extra) }} <br>
-
-                    <!--category-->
-                    {{ form.category.label(class="form-label") }}
-                    {{ form.category(class="form-control", value = team.categories.name) }} <br>
-
-
-                    <!--language-->
-                    {{ form.language.label(class="form-label") }}
-                    {{ form.language(class="form-control", value = team.languages.name) }} <br>
-
-
-
-
-                    {{ form.submit(class="btn menu mb-3") }}
-
-                </form>
+            <div class="mb-2">
+                <!--team name and school name-->
+                {{ form.team_name.label(class="form-label") }}
+                {{ form.team_name(class="form-control", value = team.team_name) }}
             </div>
 
-        </div>
+            <div class="mb-2">
+                {{ form.school.label(class="form-label") }}
+                {{ form.school(class="form-control", value = team.schools.name) }}
+            </div>
+
+            <div class="mb-2">
+                <!--teammates data-->
+                <!--teammate1-->
+                {{ form.teammate1.label(class="form-label") }}
+                {{ form.teammate1(class="form-control", value = team.teammate1) }}
+            </div>
+
+            <div class="mb-2">
+                {{ form.grade1.label(class="form-label") }}
+                {{ form.grade1(class="form-control", value = team.grade1) }}
+            </div>
+
+            <div class="mb-2">
+                <!--teammate2-->
+                {{ form.teammate2.label(class="form-label") }}
+                {{ form.teammate2(class="form-control", value = team.teammate2) }}
+            </div>
+
+            <div class="mb-2">
+                {{ form.grade2.label(class="form-label") }}
+                {{ form.grade2(class="form-control", value = team.grade2) }}
+            </div>
+
+            <div class="mb-2">
+                <!--teammate3-->
+                {{ form.teammate3.label(class="form-label") }}
+                {{ form.teammate3(class="form-control", value = team.teammate3) }}
+            </div>
+
+            <div class="mb-2">
+                {{ form.grade3.label(class="form-label") }}
+                {{ form.grade3(class="form-control", value = team.grade3) }}
+            </div>
+
+            <div class="mb-2">
+                <!--extra teammate-->
+                {{ form.extra_teammate.label(class="form-label") }}
+                {{ form.extra_teammate(class="form-control", value = team.teammate_extra) }}
+            </div>
+
+            <div class="mb-2">
+                {{ form.extra_grade.label(class="form-label") }}
+                {{ form.extra_grade(class="form-control", value = team.grade_extra) }}
+            </div>
+
+            <div class="mb-2">
+                <!--category-->
+                {{ form.category.label(class="form-label") }}
+                {{ form.category(class="form-control", value = team.categories.name) }}
+            </div>
+
+
+            <div class="mb-2">
+                <!--language-->
+                {{ form.language.label(class="form-label") }}
+                {{ form.language(class="form-control", value = team.languages.name) }}
+            </div>
+
+            {{ form.submit(class="btn btn-primary mb-3") }}
+
+        </form>
     </div>
+
 </div>
 {% endblock %}

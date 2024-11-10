@@ -1,27 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Csapat neve</th>
-            <th>Kategória</th>
-            <th>Nyelv</th>
-            <th>Felkészítő tanárok</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for team in teams %}
+<div class="row col">
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>{{ team.team_name }}</td>
-                <td>{{ team.category }}</td>
-                <td>{{ team.language }}</td>
-                <td>{{ team.teachers }}</td>
-                <td>
-                    <a href="{{ url_for('schools.team', team_id=team.team_id) }}" class="btn btn-primary">Edit</a>
-                </td>
+                <th>Csapat neve</th>
+                <th>Kategória</th>
+                <th>Nyelv</th>
+                <th>Felkészítő tanárok</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{ team.team_name }}</td>
+                    <td>{{ team.category }}</td>
+                    <td>{{ team.language }}</td>
+                    <td>{{ team.teachers }}</td>
+                    <td>
+                        <a href="{{ url_for('schools.team', team_id=team.team_id) }}" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% end block %}

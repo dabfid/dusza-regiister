@@ -39,6 +39,7 @@ def load_user(user_id):
 @students.before_request
 def load_user_info():
     g.perms = 1
+    g.team_id = current_user.id
     g.notifications = Notifications.query.all()
 
 @students.route("/", methods=["GET"])
@@ -48,33 +49,9 @@ def index():
 
 @students.route("/register", methods=["GET", "POST"])
 def register():
-
+    g.perms = 0
 
     form = RegisterForm()
-    username = None
-    password = None
-    confirm_password = None
-    email = None
-
-    team_name = None
-
-    school = None
-
-    t1 = None  # csapatárs 1
-    t2 = None  # csapatárs 2
-    t3 = None  # csapatárs 3
-    g1 = None  # csapatárs 1 évfolyama
-    g2 = None  # csapatárs 2 évfolyama
-    g3 = None  # csapatárs 3 évfolyama
-
-    t_extra = None  # pót csapatárs
-    g_extra = None  # pót csapatárs évfolyama
-
-    teachers = None
-
-    category = None
-    language = None
-
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
@@ -93,9 +70,13 @@ def register():
 
         if form.extra_teammate.data:
             t_extra = form.extra_teammate.data
+        else:
+            t_extra = None
 
         if form.extra_grade:
             g_extra = form.extra_grade.data
+        else:
+            g_extra = None
 
         teachers = form.teachers.data
 
@@ -119,10 +100,8 @@ def register():
         new_team.grade1 = g1
         new_team.grade2 = g2
         new_team.grade3 = g3
-        if t_extra:
-            new_team.teammate_extra = t_extra
-        if g_extra:
-            new_team.grade_extra = g_extra
+        new_team.teammate_extra = t_extra
+        new_team.grade_extra = g_extra
         new_team.teachers = teachers
         new_team.category = category
         new_team.language = language
@@ -133,6 +112,7 @@ def register():
         except IntegrityError:
             db.session.rollback()
             flash("A felhasználónév vagy email cim már foglalt!")
+        return render_template('students_bp.index')
     return render_template(
         "register.html",
         form=form)

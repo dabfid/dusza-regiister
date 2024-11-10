@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Csapatnév</th>
@@ -29,7 +27,7 @@
                     <td>Szervezők által jóváhagyva</td>
                 {% endif %}
                 <td>
-                    <a href="{{ url_for('dashboard_bp.team', team_id=team.id) }}" class="btn btn-primary">Szerkesztés</a>
+                    <a href="{{ url_for('dashboard_bp.team', team_id=team.id) }}" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
                 </td>
                 <td>
                     <a href="{{ url_for('dashboard_bp.download', id=team.id) }}" class="btn btn-primary">Exportálás</a>
