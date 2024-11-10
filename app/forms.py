@@ -76,7 +76,7 @@ class UpdateForm(FlaskForm):
     category = SelectField('Kategória', validators=[DataRequired()], coerce=int)
     language = SelectField('Nyelv', validators=[DataRequired()], coerce=int)
 
-    submit = SubmitField("")
+    submit = SubmitField("Küldés")
 
     def __init__(self, *args, **kwargs):
         super(UpdateForm, self).__init__(*args, **kwargs)
