@@ -92,29 +92,29 @@ class LoginForm(FlaskForm):
     username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
 
-    submit = SubmitField("")
+    submit = SubmitField("Bejelentkezés")
 
 class AddLanguageForm(FlaskForm):
     """
     Új programozási nyelv hozzáadásához használt form.
     """
     language = StringField("Nyelv hozzáadása:", validators=[DataRequired(), Length(max=30)])
-    submit = SubmitField("")
+    submit = SubmitField("Hozzáadás")
 
 class AddCategoryForm(FlaskForm):
     """
     Új kategória hozzáadásához használt form.
     """
-    category = StringField("Kategóri hozzáadása:", validators=[DataRequired(), Length(max=30)])
-    submit = SubmitField("")
+    category = StringField("Kategória:", validators=[DataRequired(), Length(max=30)])
+    submit = SubmitField("Hozzáadás")
 
 class AddSchoolForm(FlaskForm):
     """
     Új iskola hozzáadásához használt form.
     """
-    username = StringField("", validators=[DataRequired(), Length(max=30)])
+    username = StringField("Felhasználónév:", validators=[DataRequired(), Length(max=30)])
     
-    password = PasswordField("", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("Jelszó:", validators=[DataRequired(), Length(max=30)])
     confirm_password = PasswordField("", validators=[DataRequired(), Length(max=30)])
 
     contact_name = StringField("", validators=[DataRequired(), Length(max=30)])
