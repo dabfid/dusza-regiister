@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, g
 
 from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
@@ -9,20 +9,35 @@ from app.tables import Status
 
 from app.forms import LoginForm, UpdateSchoolForm, ValidateTeamForm
 
-schools = Blueprint("schools_bp", __name__, static_folder="static", template_folder="templates")
+schools = Blueprint(
+    "schools_bp", __name__, static_folder="static", template_folder="templates"
+)
 
-@schools.route('/teams', methods=['GET'])
+
+@schools.before_request
+def load_user_info():
+    if current_user.username:
+        g.user = current_user
+        g.perms = Perms.SCHOOL
+    else:
+        g.user = None
+        g.perms = None
+
+
+@schools.route("/teams", methods=["GET"])
 def teams():
-    return render_template("teams.html", 
-                           teams=Schools.query.all())
+    teams = Schools.query.filter_by(school_id=current_user.id).all()
+    return render_template("teams.html", teams=teams)
 
-@schools.route('/teams/<int:id>', methods=['GET', 'POST'])
+
+@schools.route("/teams/<int:id>", methods=["GET", "POST"])
 def team(id):
     team = Schools.query.get_or_404(id)
-    return render_template("view_team.html", 
-                           team=team)
+    return render_template("view_team.html", team=team)
+
+
 # csapatok adatainak jováhagyása
-@schools.route('/validate_team/<int:team_id>', methods=['POST'])
+@schools.route("/validate_team/<int:team_id>", methods=["POST"])
 @login_required
 def validate_team(team_id):
     previous = request.referrer
@@ -33,7 +48,8 @@ def validate_team(team_id):
 
     return redirect(previous)
 
-@schools.route('/edit/<int:id>', methods=['GET', 'POST'])
+
+@schools.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
     form = UpdateSchoolForm()
     school = Schools.query.get_or_404(id)
@@ -44,11 +60,10 @@ def edit(id):
         db.session.commit()
 
         flash("School updated successfully", "success")
-    return render_template("edit_school.html", 
-                           form=form, 
-                           school=school)
+    return render_template("edit_school.html", form=form, school=school)
 
-@schools.route('/login', methods=['GET', 'POST'])
+
+@schools.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -68,9 +83,9 @@ def login():
             return render_template("login.html", form=form)
     return render_template("login.html", form=form)
 
-@schools.route('/logout', methods=['GET'])
+
+@schools.route("/logout", methods=["GET"])
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("dashboard_bp.login"))
-

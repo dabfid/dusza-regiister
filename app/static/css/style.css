@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+.content{
+    color: black;
+}
+
 .menu{
     color: #DCCAAF;
     background-color: #9B5135 ;

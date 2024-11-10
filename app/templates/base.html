@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% url_for(static/style.css) %}">
-    
-</head>
-<body class="body">
-  <nav class="navbar navbar-expand-lg szin mb-5">
-      <div class="container">
-          <h1 class="na ms-3">Jelentkező felület</h1>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            
-            <li class="nav-item">
-              <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/tanaroknak.html">Szervezőknek</a></button>
-            </li>
-            <li class="nav-item">
-              <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/regisztracio.html">Diákoknak</a></button>
-            </li>    
-            <li class="nav-item">
-              <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/iskolaknak.html">Iskoláknak</a></button>
-            </li>  
-          </ul>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Documetns</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    </head>
+    <body class="body">
+        <nav class="navbar navbar-expand-lg szin mb-5">
+            <div class="container">
+                <h1 class="na ms-3">Jelentkező felület</h1>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/tanaroknak.html">Szervezőknek</a></button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/regisztracio.html">Diákoknak</a></button>
+                        </li>    
+                        <li class="nav-item"                            <button type="button" class="btn menu"><a href="https://madaraszdo.jedlik.net/verseny/iskolaknak.html">Iskoláknak</a></button>
+                        </li>  
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="container bg-white rounded">
+            <div class="row">
+                <div class="col mb-3 mt-3 ms-3 me-3" >
+                    <h1>
+                    {% block title %}
+                    {% endblock %}
+                    </h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
-      </div>
-    </nav>
 
 
-    <div class="container bg-white rounded">
-      <div class="row">
-        <div class="col mb-3 mt-3 ms-3 me-3" >
-          <h1>
-           {{title}}
-          </h1> 
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-4">
-           {{content}}
-        </div>
-      </div>
-    </div>
 
-
-    
-</body>
+    </body>
 </html>

@@ -1,13 +1,12 @@
-from flask import Blueprint, render_template, request, session, abort, url_for, redirect, flash
+from flask import Blueprint, render_template, request, session, abort, url_for, redirect, flash, g
 
-
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_login import login_required, login_user, logout_user
 
 from app.forms import AddLanguageForm, AddCategoryForm
 
 from app.tables import Languages, Admins, Teams, Categories, Notifications, db # pyright: ignore
-from app.tables import Status
+from app.tables import Status, Perms
 
 from app.forms import LoginForm, ValidateTeamForm # pyright: ignore
 
@@ -30,6 +29,15 @@ login_admin.login_view = "dashboard_bp.login"
 @login_admin.user_loader
 def load_user(user_id):
     return Admins.query.get_or_404(user_id)
+
+@dashboard.before_request
+def load_user_info():
+    if current_user.username:
+        g.user = current_user
+        g.perms = Perms.STUDENT
+    else:
+        g.user = None
+        g.perms = None
 
 # dashboard főoldal
 @dashboard.route("/", methods=['GET'])
@@ -148,9 +156,9 @@ def delete_category(category_id):
 
 # csapatok megjelenitése
 @dashboard.route("/teams", methods=['GET'])
-@login_required
 def teams():
     teams = Teams.query.all()
+    print(teams)
     return render_template("teams.html", teams=teams)
 
 # egyes csapatok megjelenitése, kezelése

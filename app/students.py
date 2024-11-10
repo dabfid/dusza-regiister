@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, request, g
 from flask import redirect, url_for
 from app.tables import Teams #pyright: ignore
 from app.tables import db #pyright: ignore
@@ -20,6 +20,15 @@ login_student.login_view = "students_bp.login"
 @login_student.user_loader
 def load_user(user_id):
     return Teams.query.get_or_404(user_id)
+
+@students.before_request
+def load_user_info():
+    if current_user.username:
+        g.user = current_user
+        g.perms = Perms.ADMIN
+    else:
+        g.user = None
+        g.perms = None
 
 @students.route('/register', methods=['GET', 'POST'])
 def register():
@@ -146,8 +155,7 @@ def login():
             login_user(user)
         else:
             flash("Invalid username or password", "danger")
-            return render_template("login.html", form=form)
-    return render_template("login.html", form=form)
+    return redirect(url_for("students_bp.index"))
 
 @students.route('/logout', methods=['GET'])
 @login_required
