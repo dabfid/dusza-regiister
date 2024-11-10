@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, g
 
 from flask_login import LoginManager
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from app.tables import Schools, Teams
 from app.tables import db
-from app.tables import Status
+from app.tables import Status, Perms
 
 from app.forms import LoginForm, UpdateSchoolForm, ValidateTeamForm
 
@@ -16,13 +16,13 @@ schools = Blueprint(
 
 @schools.before_request
 def load_user_info():
-    if current_user.username:
-        g.user = current_user
-        g.perms = Perms.SCHOOL
-    else:
-        g.user = None
-        g.perms = None
-
+    if hasattr(current_user, "username"):
+        if current_user.username:
+            g.user = current_user
+            g.perms = Perms.SCHOOL
+        else:
+            g.user = None
+            g.perms = None
 
 @schools.route("/teams", methods=["GET"])
 def teams():

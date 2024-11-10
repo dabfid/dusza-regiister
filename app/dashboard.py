@@ -5,10 +5,10 @@ from flask_login import login_required, login_user, logout_user
 
 from app.forms import AddLanguageForm, AddCategoryForm
 
-from app.tables import Languages, Admins, Teams, Categories, Notifications, db # pyright: ignore
+from app.tables import Languages, Admins, Teams, Categories, Notifications, Schools, db # pyright: ignore
 from app.tables import Status, Perms
 
-from app.forms import LoginForm, ValidateTeamForm # pyright: ignore
+from app.forms import LoginForm, ValidateTeamForm, AddSchoolForm # pyright: ignore
 
 from app import app # pyright: ignore
 
@@ -32,12 +32,13 @@ def load_user(user_id):
 
 @dashboard.before_request
 def load_user_info():
-    if current_user.username:
-        g.user = current_user
-        g.perms = Perms.STUDENT
-    else:
-        g.user = None
-        g.perms = None
+    if hasattr(current_user, "username"):
+        if current_user.username:
+            g.user = current_user
+            g.perms = Perms.STUDENT
+        else:
+            g.user = None
+            g.perms = None
 
 # dashboard főoldal
 @dashboard.route("/", methods=['GET'])
@@ -166,7 +167,7 @@ def teams():
 @login_required
 def team(team_id):
     team = Teams.query.get_or_404(team_id)
-    return render_template("team.html",
+    return render_template("view_team.html",
                            team=team)
 
 @dashboard.route("/notify/<int:team_id>", methods=['POST'])
@@ -181,7 +182,7 @@ def notify(team_id):
     return redirect(previous)
 
 # csapatok adatainak jováhagyása
-@dashboard.route('/validate_team/<int:team_id>', methods=['POST'])
+@dashboard.route('/validate_team/<int:team_id>', methods=['GET'])
 @login_required
 def validate_team(team_id):
     previous = request.referrer
@@ -191,6 +192,60 @@ def validate_team(team_id):
     db.session.commit()
 
     return redirect(previous)
+
+# iskolák adatainak megjelenitése
+@dashboard.route("/schools", methods=['GET'])
+@login_required
+def schools():
+    schools = Schools.query.all()
+    return render_template("schools.html", schools=schools)
+
+# új iskola hozzáadása
+@dashboard.route("/schools/add_school", methods=['GET', 'POST'])
+@login_required
+def add_school():
+    form = AddSchoolForm()
+    username = None
+    password = None
+    confirm_password = None
+
+    contact_name = None
+    contact_email = None
+
+    school_name = None
+    school_address = None
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        confirm_password = form.confirm_password.data
+
+        contact_name = form.contact_name.data
+        contact_email = form.contact_email.data
+
+        school_name = form.school_name.data
+        school_address = form.school_address.data
+
+        if password != confirm_password:
+            flash("A jelszavak nem egyeznek", "danger")
+            return render_template("add_school.html", form=form)
+
+        new_school = Schools(username=username, password=password, contact_name=contact_name, contact_email=contact_email, school_name=school_name, school_address=school_address)
+        db.session.add(new_school)
+        db.session.commit()
+        return redirect(url_for("dashboard_bp.schools"))
+    return render_template("add_school.html", form=form)
+
+@dashboard.route("/schools/delete/<int:id>", methods=['POST'])
+@login_required
+def delete_school(id):
+    previous = request.referrer
+
+    school = Schools.query.get_or_404(id)
+    db.session.delete(school)
+    db.session.commit()
+
+    redirect(previous)
+
 
 # csapatok adatai letöltése csv formátumban
 @dashboard.route("/download/<int:id>", methods=['GET'])
