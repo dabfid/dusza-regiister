@@ -8,6 +8,20 @@
     --bs-link-hover-color: #DCCAAF;
 }
 
+.btn-primary {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: #a6573a;
+    --bs-btn-hover-border-color: #a6573a;
+    --bs-btn-focus-shadow-rgb: 166,87,58;
+    --bs-btn-active-color: var(--bs-btn-hover-color);
+    --bs-btn-active-bg: #c26f51;
+    --bs-btn-active-border-color: #c26f51;
+  }
+
 .navbar-dark {
     --bs-navbar-brand-color: #DCCAAF;
 }
