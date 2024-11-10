@@ -1,5 +1,5 @@
 from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField, EmailField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email
 from wtforms.validators import Length
 
 from flask_wtf import FlaskForm
@@ -51,29 +51,29 @@ class UpdateForm(FlaskForm):
     Ez a form szolgál a versenyzők adatainak módosítására. 
     """
 
-    email = EmailField("", validators=[DataRequired(), Length(max=60)])
+    email = StringField("", validators=[DataRequired(), Email(), Length(max=60)])
 
     # Csapat Adatai
-    team_name = StringField("", validators=[DataRequired(), Length(max=30)])
-    school = SelectField('Iskola', validators=[DataRequired()], coerce=int)
+    team_name = StringField("Új csapatnév:", validators=[DataRequired(), Length(max=30)])
+    school = SelectField('Iskola megváltoztatása:', validators=[DataRequired()], coerce=int)
 
-    teammate1 = StringField("", validators=[DataRequired(), Length(max=30)])
-    grade1 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+    teammate1 = StringField("1. csapattag megváltoztatása:", validators=[DataRequired(), Length(max=30)])
+    grade1 = SelectField("Új csapattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
 
-    teammate2 = StringField("", validators=[DataRequired(), Length(max=30)])
-    grade2 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+    teammate2 = StringField("2. csapattag megváltoztatása:", validators=[DataRequired(), Length(max=30)])
+    grade2 = SelectField("Új csapattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
 
-    teammate3 = StringField("", validators=[DataRequired(), Length(max=30)])
-    grade3 = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
+    teammate3 = StringField("3. csapattag megváltoztatása:", validators=[DataRequired(), Length(max=30)])
+    grade3 = SelectField("Új csapattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[DataRequired()])
 
     # póttag
-    extra_teammate = StringField("", validators=[Length(max=30)])
-    extra_grade = SelectField("", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[])
+    extra_teammate = StringField("Extra csapattag megváltoztatása:", validators=[Length(max=30)])
+    extra_grade = SelectField("Új csapattag osztálya:", choices=[(9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13")], validators=[])
 
-    teachers = StringField("", validators=[DataRequired()])
+    teachers = StringField("Felkészítő tanár megváltoztatása:", validators=[DataRequired()])
 
-    category = SelectField('Kategória', validators=[DataRequired()], coerce=int)
-    language = SelectField('Nyelv', validators=[DataRequired()], coerce=int)
+    category = SelectField('Kategória megváltoztatása:', validators=[DataRequired()], coerce=int)
+    language = SelectField('Nyelv megváltoztatása:', validators=[DataRequired()], coerce=int)
 
     submit = SubmitField("Küldés")
 
