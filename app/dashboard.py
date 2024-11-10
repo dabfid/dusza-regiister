@@ -106,11 +106,11 @@ def logout():
 
 # programozási nyelvek megjelenitése, kezelése
 @dashboard.route("/languages", methods=["GET", "POST"])
-@login_required
+
 def languages():
     form = AddLanguageForm()
     language = None
-    result = Languages.query.all
+    result = Languages.query.all()
 
     if form.validate_on_submit():
         language = form.language.data
@@ -119,7 +119,7 @@ def languages():
         db.session.commit()
         form.language.data = ""
 
-    return render_template("languages.html", language=language, form=form, list=result)
+    return render_template("languages.html", language=language, form=form, langlist=result)
 
 
 # versenykategoriák megjelenitése, kezelése
@@ -141,8 +141,8 @@ def categories():
 
 
 # programozási nyelv törlése az adatbázisból
-@dashboard.route("/delete_language/<int:item_id>", methods=["POST"])
-@login_required
+@dashboard.route("/delete_language/<int:lang_id>", methods=["POST"])
+# @login_required
 def delete_language(lang_id):
     language = Languages.query.get(lang_id)
     is_used = Teams.query.filter_by(language=lang_id).count() > 0

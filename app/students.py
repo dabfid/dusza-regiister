@@ -51,11 +51,7 @@ def index():
 
 @students.route("/register", methods=["GET", "POST"])
 def register():
-    deadline = Deadline.query.first()
 
-    if datetime.now() > deadline.date:
-        flash("A jelentkezési határidő lejárt!")
-        return redirect(url_for("students_bp.index"))
 
     form = RegisterForm()
     username = None
