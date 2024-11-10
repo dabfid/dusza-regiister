@@ -22,7 +22,7 @@ def load_user_info():
             g.perms = Perms.SCHOOL
         else:
             g.user = None
-            g.perms = None
+            g.perms = Perms.LOGGED_OUT
     g.notifications = Notifications.query.all()
 
 @schools.route("/teams", methods=["GET"])
@@ -109,7 +109,7 @@ def change_password():
             flash("A megadott jelszavak nem egyeznek")
             return render_template("change_password.html", form=form)
         
-        user.password(password)
+        user.password = password
         db.session.commit()
         flash("Sikeres jelszóváltoztatás")
 

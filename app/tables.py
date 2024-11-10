@@ -42,7 +42,7 @@ class Schools(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     username = db.Column(db.String(30), unique=True, nullable=False, index=True)
-    password_hash = db.Column(db.String(30), nullable=False, index=True)
+    password_hash = db.Column(db.String(200), nullable=False, index=True)
 
     @property
     def password(self):
@@ -73,7 +73,7 @@ class Admins(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     username = db.Column(db.String(30), unique=True, nullable=False, index=True)
-    password_hash = db.Column(db.String(30), nullable=False, index=True)
+    password_hash = db.Column(db.String(200), nullable=False, index=True)
 
     @property
     def password(self):
@@ -111,7 +111,7 @@ class Teams(db.Model, UserMixin):
     __tablename__ = "teams"
     id = db.Column(db.Integer, primary_key=True, index=True)
     username = db.Column(db.String(30), unique=True, nullable=False, index=True)
-    password_hash = db.Column(db.String(30), nullable=False, index=True)
+    password_hash = db.Column(db.String(200), nullable=False, index=True)
     email = db.Column(db.String(60), nullable=False, unique=True)
     
     @property

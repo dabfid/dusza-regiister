@@ -1,4 +1,4 @@
-from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField, EmailField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, DateTimeField, EmailField
 from wtforms.validators import DataRequired, Email
 from wtforms.validators import Length
 
@@ -147,7 +147,7 @@ class ModifyDeadlineForm(FlaskForm):
     """
     Határidő módosítására használt form.
     """
-    deadline = DateField("Új határidő:", validators=[DataRequired()])
+    deadline = DateTimeField("Új határidő:", validators=[DataRequired()])
     submit = SubmitField("")
 
 class RegisterNewAdminForm(FlaskForm):

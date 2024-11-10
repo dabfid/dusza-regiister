@@ -38,6 +38,8 @@ import pandas
 
 from datetime import datetime
 
+from pymysql import IntegrityError
+
 dashboard = Blueprint(
     "dashboard_bp", __name__, static_folder="static", template_folder="templates"
 )
@@ -61,7 +63,7 @@ def load_user_info():
             g.perms = Perms.STUDENT
         else:
             g.user = None
-            g.perms = None
+            g.perms = Perms.LOGGED_OUT
     g.notifications = Notifications.query.all()
 
 
@@ -115,9 +117,13 @@ def languages():
     if form.validate_on_submit():
         language = form.language.data
         new_language = Languages(name=language)
-        db.session.add(new_language)
-        db.session.commit()
-        form.language.data = ""
+        try:
+            db.session.add(new_language)
+            db.session.commit()
+            form.language.data = ""
+        except IntegrityError:
+            flash("Hiba történt a nyelv hozzáadása során")
+            return render_template("languages.html", language=language, form=form, list=result)
 
     return render_template("languages.html", language=language, form=form, langlist=result)
 
@@ -133,9 +139,13 @@ def categories():
     if form.validate_on_submit():
         category = form.categorie.data
         new_category = Categories(name=category)
-        db.session.add(new_category)
-        db.session.commit()
-        form.category.data = ""
+        try:
+            db.session.add(new_category)
+            db.session.commit()
+            form.category.data = ""
+        except IntegrityError:
+            flash("Hiba történt a kategória hozzáadása során")
+            return render_template("categories.html", category=category, form=form, list=result)
 
     return render_template("categories.html", category=category, form=form, list=result)
 
@@ -280,9 +290,13 @@ def add_school():
             school_name=school_name,
             school_address=school_address,
         )
-        db.session.add(new_school)
-        db.session.commit()
-        return redirect(url_for("dashboard_bp.schools"))
+        try:
+            db.session.add(new_school)
+            db.session.commit()
+            return redirect(url_for("dashboard_bp.schools"))
+        except IntegrityError:
+            flash("Hiba történt az iskola hozzáadása során")
+            return render_template("add_school.html", form=form)
     return render_template("add_school.html", form=form)
 
 
@@ -333,16 +347,15 @@ def download(id):
 
 # határidő modosítása
 @dashboard.route("/deadline", methods=["GET", "POST"])
-@login_required
 def deadline():
     form = ModifyDeadlineForm()
     deadline = Deadline.query.first()
     if form.validate_on_submit():
-        deadline.date = form.deadline
+        deadline.date = form.deadline.data
         db.session.commit()
     return render_template("deadline.html", form=form, deadline=deadline)
 
-@dashboard.route("/new_admin", methods=["GET"])
+@dashboard.route("/new_admin", methods=["GET", 'POST'])
 def new_admin():
     form = RegisterNewAdminForm()
     username = None
@@ -358,10 +371,15 @@ def new_admin():
             return render_template("new_admin.html", form=form)
 
         new_admin = Admins(username=username)
-        new_admin.password(password)
-        db.session.add(new_admin)
-        db.session.commit()
-        flash("Sikeres regisztráció")
+        new_admin.password = password
+        
+        try:
+            db.session.add(new_admin)
+            db.session.commit()
+            flash("Sikeres regisztráció")
+        except IntegrityError:
+            db.session.rollback()
+            flash("A felhasználónév már foglalt")
     return render_template("new_admin.html",
                            form=form)
 
@@ -383,8 +401,9 @@ def change_password():
             flash("A megadott jelszavak nem egyeznek")
             return render_template("change_password.html", form=form)
         
-        user.password(password)
+        user.password = password
         db.session.commit()
+
         flash("Sikeres jelszóváltoztatás")
 
     return redirect(url_for("dashboard_bp.index"))
