@@ -8,9 +8,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@localhost/dusz
 
 from app.students import students
 from app.dashboard import dashboard
+from app.schools import schools
 
 app.register_blueprint(students, url_prefix="/students")
 app.register_blueprint(dashboard, url_prefix="/dashboard")
+app.register_blueprint(schools, url_prefix="/schools")
 
 if __name__ == '__main__':
     try:

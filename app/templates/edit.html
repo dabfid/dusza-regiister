@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+
+{% block head_title %}
+{{ team.team_name }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col mb-3 mt-3 ms-3 me-3">
+      <h1>
+        Programozási nyelv szerkesztő
+      </h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col">
+    {% if team %}
+      <table class="table table-striped">
+        <tr>
+          <th colspan="2">Csapat adatai</th>
+        </tr>
+        <tr>
+            <td>Csapat neve</td>
+            <td>{{ team.team_name }}</td>
+        </tr>
+        <tr>
+            <td>Iskola neve</td>
+            <td>{{ team.school_id }}</td>
+        </tr>
+        <tr>
+            <td>Csapattag1</td>
+            <td>{{ team.teammate1 }}</td>
+        </tr>
+        <tr>
+            <td>Osztálya</td>
+            <td>{{ team.grade1 }}</td>
+        </tr>
+        <tr>
+            <td>Csapattag2</td>
+            <td>{{ team.teammate2 }}</td>
+        </tr>
+        <tr>
+            <td>Osztálya</td>
+            <td>{{ team.grade2 }}</td>
+        </tr>
+        <tr>
+            <td>Csapattag3</td>
+            <td>{{ team.teammate3 }}</td>
+        </tr>
+        <tr>
+            <td>Osztálya</td>
+            <td>{{ team.grade3 }}</td>
+        </tr>
+        <tr>
+            <td>Extra csapattag</td>
+            <td>{{ team.teammate_extra }}</td>
+        </tr>
+        <tr>
+            <td>Osztálya</td>
+            <td>{{ team.grade_extra }}</td>
+        </tr>
+        <tr>
+            <td>Felkészítő tanár</td>
+            <td>{{ team.}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+      </table>
+      {% endif %}
+  
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <form method="post">
+            {{ form.hidden_tag() }}
+  
+            {{ form.language.label(class="form-label") }}
+            {{ form.language(class="form-control") }}
+            {{ form.submit(class="btn menu mb-3") }}
+  
+          </form>
+  
+  
+  
+        </div>
+  
+      </div>
+    </div>
+  </div>
+{% endblock %}
