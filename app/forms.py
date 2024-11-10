@@ -39,7 +39,7 @@ class RegisterForm(FlaskForm):
     category = SelectField("Versenykategória:", validators=[DataRequired()], coerce=int)
     language = SelectField("Választott programozási nyelv:", validators=[DataRequired()], coerce=int)
 
-    submit = SubmitField("")
+    submit = SubmitField("Küldés")
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
