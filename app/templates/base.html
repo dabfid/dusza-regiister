@@ -75,7 +75,7 @@
                             <a href="{{ url_for('schools_bp.teams') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-people-fill"></i>Csapatok</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
-                            <a href="{{ url_for('schools_bp.edit') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskola adatai</a>
+                            <a href="{{ url_for('schools_bp.edit', id=g.school_id) }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Iskola adatai</a>
                         </li>
                         <li class="nav-item mb-1 mb-md-0">
                             <a href="{{ url_for('schools_bp.logout') }}" class="nav-link btn btn-lg btn-hover-grow"><i class="bi bi-box-arrow-left"></i>Kijelentkezés</a>
